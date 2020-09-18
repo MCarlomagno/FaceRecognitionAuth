@@ -1,3 +1,7 @@
+<div align="center">
+<img src="https://raw.githubusercontent.com/MCarlomagno/assets/master/FaceNetAuthentication-logo.png" alt="Screenshot 1" width="300"/>
+</div>
+
 # FaceNetAuthentication
 
 Simple face recognition authentication (Sign up + Sign in) written in Flutter using Tensorflow Lite and Firebase ML vision library.
