@@ -35,10 +35,16 @@ class _AuthActionButtonState extends State<AuthActionButton> {
   User predictedUser;
 
   Future _signUp(context) async {
+
+    /// gets predicted data from facenet service (user face detected)
     List predictedData = _faceNetService.predictedData;
     String user = _userTextEditingController.text;
     String password = _passwordTextEditingController.text;
+
+    /// creates a new user in the 'database'
     await _dataBaseService.saveData(user, password, predictedData);
+
+    /// resets the face stored in the face net sevice
     this._faceNetService.setPredictedData(null);
     Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) => MyHomePage()));
   }
@@ -60,14 +66,7 @@ class _AuthActionButtonState extends State<AuthActionButton> {
 
   String _predictUser() {
     String userAndPass = _faceNetService.predict();
-
-    if (userAndPass != null) {
-      print('encontrado! ' + userAndPass);
-      return userAndPass;
-    } else {
-      print(' no encontrado ');
-      return null;
-    }
+    return userAndPass?? null;
   }
 
   @override
@@ -85,9 +84,7 @@ class _AuthActionButtonState extends State<AuthActionButton> {
 
           if (faceDetected) {
             if (widget.isLogin) {
-              print('before predict user');
               var userAndPass = _predictUser();
-              print('after predict user');
               if (userAndPass != null) {
                 this.predictedUser = User.fromDB(userAndPass);
               }
@@ -139,7 +136,6 @@ class _AuthActionButtonState extends State<AuthActionButton> {
               ? RaisedButton(
                   child: Text('Login'),
                   onPressed: () async {
-                    print('on sign in');
                     _signIn(context);
                   },
                 )
