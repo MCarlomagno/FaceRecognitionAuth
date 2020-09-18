@@ -53,7 +53,7 @@ TODO: add nice screenshots.
 
 ## Licence
 
-TODO: add licence.
+https://opensource.org/licenses/BSD-3-Clause
 
 
 
