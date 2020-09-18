@@ -49,8 +49,8 @@ TODO: upload apk link here.
 
 ## Screenshots
 <div align="center">
- <img src="https://raw.githubusercontent.com/MCarlomagno/assets/master/FaceRecognitionAuth-screenshot1.jpg" alt="Screenshot 1" height="200px"/>
- <img src="https://raw.githubusercontent.com/MCarlomagno/assets/master/FaceRecognitionAuth-screenshot1.jpg" alt="Screenshot 1" height="200px"/>
+ <img src="https://raw.githubusercontent.com/MCarlomagno/assets/master/FaceRecognitionAuth-screenshot1.jpg" alt="Screenshot 1" width="300"/>
+ <img src="https://raw.githubusercontent.com/MCarlomagno/assets/master/FaceRecognitionAuth-screenshot1.jpg" alt="Screenshot 1" width="300"/>
 </div>
 
 ## Licence
