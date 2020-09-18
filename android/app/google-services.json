@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "908209109268",
+    "firebase_url": "https://facerecognitionauth.firebaseio.com",
+    "project_id": "facerecognitionauth",
+    "storage_bucket": "facerecognitionauth.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:908209109268:android:22aa62a69fde9e6a0e6a01",
+        "android_client_info": {
+          "package_name": "com.example.FaceNet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "908209109268-8833dnentno68sbhh1q3sbd5k0epm8a3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzlmpvIAirzjtO_1TDasHocRk3UrTrkig"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "908209109268-8833dnentno68sbhh1q3sbd5k0epm8a3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
