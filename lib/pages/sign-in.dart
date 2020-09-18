@@ -36,6 +36,7 @@ class SignInState extends State<SignIn> {
   bool cameraInitializated = false;
   bool _detectingFaces = false;
   bool pictureTaked = false;
+
   // switchs when the user press the camera
   bool _saving = false;
   bool _bottomSheetVisible = false;
@@ -93,12 +94,10 @@ class SignInState extends State<SignIn> {
               });
 
               if (_saving) {
-                print('sign in: set current prediction (_saving true)');
-                print('face detected:');
-                print(faceDetected);
                 _saving = false;
                 _faceNetService.setCurrentPrediction(image, faceDetected);
               }
+
             } else {
               setState(() {
                 faceDetected = null;
@@ -117,10 +116,8 @@ class SignInState extends State<SignIn> {
 
   /// handles the button pressed event
   Future<void> onShot() async {
-    print('onShot performed');
 
     if (faceDetected == null) {
-      print('face not detected!');
       showDialog(
           context: context,
           child: AlertDialog(
@@ -129,12 +126,10 @@ class SignInState extends State<SignIn> {
 
       return false;
     } else {
-       print('sign in: face detected');
       imagePath = join((await getTemporaryDirectory()).path, '${DateTime.now()}.png');
 
       _saving = true;
 
-      print('sign in: saving in true');
       await Future.delayed(Duration(milliseconds: 500));
       await _cameraService.cameraController.stopImageStream();
       await Future.delayed(Duration(milliseconds: 200));

@@ -1,7 +1,6 @@
 import 'package:FaceNetAuthentication/pages/db/database.dart';
 import 'package:FaceNetAuthentication/pages/sign-in.dart';
 import 'package:FaceNetAuthentication/pages/sign-up.dart';
-import 'package:FaceNetAuthentication/services/camera.service.dart';
 import 'package:FaceNetAuthentication/services/facenet.service.dart';
 import 'package:FaceNetAuthentication/services/ml_vision_service.dart';
 import 'package:camera/camera.dart';

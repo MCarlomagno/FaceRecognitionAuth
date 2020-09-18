@@ -32,17 +32,6 @@ class FacePainter extends CustomPainter {
     canvas.drawRRect(
         _scaleRect(rect: face.boundingBox, imageSize: imageSize, widgetSize: size, scaleX: scaleX, scaleY: scaleY),
         paint);
-
-    
-    // TextSpan span = new TextSpan(style: new TextStyle(color: Colors.white, fontSize: 15), text: 'You look nice!');
-
-    // TextPainter textPainter = new TextPainter(text: span, textAlign: TextAlign.left, textDirection: TextDirection.ltr);
-
-    // textPainter.layout();
-    // textPainter.paint(
-    //     canvas,
-    //     new Offset(size.width - (100 + face.boundingBox.left.toDouble()) * scaleX,
-    //         (face.boundingBox.top.toDouble() - 10) * scaleY));
   }
 
   @override
