@@ -1,16 +1,60 @@
 # FaceNetAuthentication
 
-A new Flutter project.
+Simple face recognition authentication (Sign up + Sign in) written in Flutter using Tensorflow Lite and Firebase ML vision library.
 
-## Getting Started
+## Stack
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
+### Flutter
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+https://flutter.dev/
+
+### Tensorflow lite
+TensorFlow Lite is an open source deep learning framework for on-device inference.
+
+https://www.tensorflow.org/lite
+
+#### Flutter + Tensrorflow lite = tflite_flutter package 
+TensorFlow Lite plugin provides a dart API for accessing TensorFlow Lite interpreter and performing inference. It binds to TensorFlow Lite C API using dart:ffi.
+
+https://pub.dev/packages/tflite_flutter/install
+
+## Setup
+
+1- Clone the project:
+
+```
+git clone https://github.com/MCarlomagno/FaceRecognitionAuth.git
+```
+2- Open the folder:
+
+```
+cd FaceRecognitionAuth
+```
+3- Install dependencies:
+
+```
+flutter pub get
+```
+4- Run on device (Check device connected or any virtual device running):
+
+```
+flutter run
+```
+## Demo
+
+TODO: upload apk link here.
+
+## Screenshots
+
+TODO: add nice screenshots.
+
+## Licence
+
+TODO: add licence.
+
+
+
+
