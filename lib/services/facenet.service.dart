@@ -41,8 +41,9 @@ class FaceNetService {
       var interpreterOptions = tflite.InterpreterOptions()..addDelegate(gpuDelegateV2);
       this._interpreter = await tflite.Interpreter.fromAsset('mobilefacenet.tflite', options: interpreterOptions);
       print('model loaded successfully');
-    } on Exception {
+    } catch (e) {
       print('Failed to load model.');
+      print(e);
     }
   }
 
@@ -54,11 +55,10 @@ class FaceNetService {
     input = input.reshape([1, 112, 112, 3]);
     List output = List(1 * 192).reshape([1, 192]);
 
-    /// runs and transforms the data 😱
+    /// runs and transforms the data 🤖
     this._interpreter.run(input, output);
     output = output.reshape([192]);
 
-    print('########## save data into _predictedData');
     this._predictedData = List.from(output);
   }
 
@@ -163,6 +163,8 @@ class FaceNetService {
     return predRes;
   }
 
+  /// Adds the power of the difference between each point
+  /// then computes the sqrt of the result 📐
   double _euclideanDistance(List e1, List e2) {
 
     double sum = 0.0;
