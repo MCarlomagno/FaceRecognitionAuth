@@ -28,6 +28,8 @@ class MLVisionService {
   }
 
   Future<List<Face>> getFacesFromImage(CameraImage image) async {
+
+    /// preprocess the image  🧑🏻‍🔧
     FirebaseVisionImageMetadata _firebaseImageMetadata = FirebaseVisionImageMetadata(
       rotation: _cameraService.cameraRotation,
       rawFormat: image.format.raw,
@@ -43,9 +45,11 @@ class MLVisionService {
       ).toList(),
     );
 
+    /// Transform the image input for the _faceDetector 🎯
     FirebaseVisionImage _firebaseVisionImage =
         FirebaseVisionImage.fromBytes(image.planes[0].bytes, _firebaseImageMetadata);
 
+    /// proces the image and makes inference 🤖
     List<Face> faces = await this._faceDetector.processImage(_firebaseVisionImage);
     return faces;
   }
