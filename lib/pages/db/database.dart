@@ -37,8 +37,6 @@ class DataBaseService {
   Future saveData(String user, String password, List modelData) async {
     String userAndPass = user + ':' + password;
     _db[userAndPass] = modelData;
-    print('################# db');
-    print(_db.keys);
     jsonFile.writeAsStringSync(json.encode(_db));
   }
 
