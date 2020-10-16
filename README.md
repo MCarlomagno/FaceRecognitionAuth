@@ -47,9 +47,6 @@ flutter pub get
 ```
 flutter run
 ```
-## Demo
-
-TODO: upload apk link here.
 
 ## Screenshots
 <div align="center">
