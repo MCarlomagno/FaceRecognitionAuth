@@ -69,8 +69,6 @@ class SignUpState extends State<SignUp> {
 
   /// handles the button pressed event
   Future<void> onShot() async {
-    print('onShot performed');
-
     if (faceDetected == null) {
       showDialog(
         context: context,
