@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-
 import 'home.dart';
 
 class Profile extends StatelessWidget {
-  const Profile({Key key, @required this.username}) : super(key: key);
-
+  const Profile(this.username, {Key key}) : super(key: key);
   final String username;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,14 +16,12 @@ class Profile extends StatelessWidget {
         child: Column(
           children: [
             Text('This is your super amazing profile'),
-            RaisedButton(
+            ElevatedButton(
               child: Text('Logout'),
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => MyHomePage()
-                  ),
+                  MaterialPageRoute(builder: (context) => MyHomePage()),
                 );
               },
             )
