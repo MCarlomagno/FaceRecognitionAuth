@@ -56,7 +56,7 @@ class FaceNetService {
 
     /// then reshapes input and ouput to model format 🧑‍🔧
     input = input.reshape([1, 112, 112, 3]);
-    List output = List.filled(1 * 192, []).reshape([1, 192]);
+    List output = List.generate(1, (index) => List.filled(192, 0));
 
     /// runs and transforms the data 🤖
     this._interpreter.run(input, output);
@@ -150,11 +150,10 @@ class FaceNetService {
   /// searchs the result in the DDBB (this function should be performed by Backend)
   /// [predictedData]: Array that represents the face by the MobileFaceNet model
   String _searchResult(List predictedData) {
-    /// loads 'database' 🙄
-    data = _dataBaseService.db;
+    Map<String, dynamic> data = _dataBaseService.db;
 
     /// if no faces saved
-    if (data.length == 0) return null;
+    if (data?.length == 0) return null;
     double minDist = 999;
     double currDist = 0.0;
     String predRes;
@@ -173,6 +172,8 @@ class FaceNetService {
   /// Adds the power of the difference between each point
   /// then computes the sqrt of the result 📐
   double _euclideanDistance(List e1, List e2) {
+    if (e1 == null || e2 == null) throw Exception("Null argument");
+
     double sum = 0.0;
     for (int i = 0; i < e1.length; i++) {
       sum += pow((e1[i] - e2[i]), 2);
