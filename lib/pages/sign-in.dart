@@ -1,17 +1,15 @@
 // A screen that allows users to take a picture using a given camera.
 import 'dart:async';
 import 'dart:io';
-import 'package:FaceNetAuthentication/pages/widgets/FacePainter.dart';
-import 'package:FaceNetAuthentication/pages/widgets/auth-action-button.dart';
-import 'package:FaceNetAuthentication/services/camera.service.dart';
-import 'package:FaceNetAuthentication/services/facenet.service.dart';
-import 'package:FaceNetAuthentication/services/ml_vision_service.dart';
+import 'package:face_net_authentication/pages/widgets/FacePainter.dart';
+import 'package:face_net_authentication/pages/widgets/auth-action-button.dart';
+import 'package:face_net_authentication/services/camera.service.dart';
+import 'package:face_net_authentication/services/facenet.service.dart';
+import 'package:face_net_authentication/services/ml_vision_service.dart';
 import 'package:camera/camera.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart' show join;
 import 'dart:math' as math;
-import 'package:path_provider/path_provider.dart';
 
 class SignIn extends StatefulWidget {
   final CameraDescription cameraDescription;
@@ -62,7 +60,8 @@ class SignInState extends State<SignIn> {
 
   /// starts the camera & start framing faces
   _start() async {
-    _initializeControllerFuture = _cameraService.startService(widget.cameraDescription);
+    _initializeControllerFuture =
+        _cameraService.startService(widget.cameraDescription);
     await _initializeControllerFuture;
 
     setState(() {
@@ -97,7 +96,6 @@ class SignInState extends State<SignIn> {
                 _saving = false;
                 _faceNetService.setCurrentPrediction(image, faceDetected);
               }
-
             } else {
               setState(() {
                 faceDetected = null;
@@ -116,24 +114,25 @@ class SignInState extends State<SignIn> {
 
   /// handles the button pressed event
   Future<void> onShot() async {
-
     if (faceDetected == null) {
       showDialog(
-          context: context,
-          child: AlertDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
             content: Text('No face detected!'),
-          ));
+          );
+        },
+      );
 
       return false;
     } else {
-      imagePath = join((await getTemporaryDirectory()).path, '${DateTime.now()}.png');
-
       _saving = true;
 
       await Future.delayed(Duration(milliseconds: 500));
       await _cameraService.cameraController.stopImageStream();
       await Future.delayed(Duration(milliseconds: 200));
-      await _cameraService.takePicture(imagePath);
+      XFile file = await _cameraService.takePicture();
+      imagePath = file.path;
 
       setState(() {
         _bottomSheetVisible = true;
@@ -172,13 +171,15 @@ class SignInState extends State<SignIn> {
                       fit: BoxFit.fitHeight,
                       child: Container(
                         width: width,
-                        height: width / _cameraService.cameraController.value.aspectRatio,
+                        height: width /
+                            _cameraService.cameraController.value.aspectRatio,
                         child: Stack(
                           fit: StackFit.expand,
                           children: <Widget>[
                             CameraPreview(_cameraService.cameraController),
                             CustomPaint(
-                              painter: FacePainter(face: faceDetected, imageSize: imageSize),
+                              painter: FacePainter(
+                                  face: faceDetected, imageSize: imageSize),
                             )
                           ],
                         ),
