@@ -1,8 +1,8 @@
-import 'package:FaceNetAuthentication/pages/db/database.dart';
-import 'package:FaceNetAuthentication/pages/sign-in.dart';
-import 'package:FaceNetAuthentication/pages/sign-up.dart';
-import 'package:FaceNetAuthentication/services/facenet.service.dart';
-import 'package:FaceNetAuthentication/services/ml_vision_service.dart';
+import 'package:face_net_authentication/pages/db/database.dart';
+import 'package:face_net_authentication/pages/sign-in.dart';
+import 'package:face_net_authentication/pages/sign-up.dart';
+import 'package:face_net_authentication/services/facenet.service.dart';
+import 'package:face_net_authentication/services/ml_vision_service.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
@@ -36,7 +36,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
     /// takes the front camera
     cameraDescription = cameras.firstWhere(
-      (CameraDescription camera) => camera.lensDirection == CameraLensDirection.front,
+      (CameraDescription camera) =>
+          camera.lensDirection == CameraLensDirection.front,
     );
 
     // start the services
@@ -66,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  RaisedButton(
+                  ElevatedButton(
                     child: Text('Sign In'),
                     onPressed: () {
                       Navigator.push(
@@ -79,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       );
                     },
                   ),
-                  RaisedButton(
+                  ElevatedButton(
                     child: Text('Sign Up'),
                     onPressed: () {
                       Navigator.push(
@@ -92,7 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       );
                     },
                   ),
-                  RaisedButton(
+                  ElevatedButton(
                     child: Text('Clean DB'),
                     onPressed: () {
                       _dataBaseService.cleanDB();
