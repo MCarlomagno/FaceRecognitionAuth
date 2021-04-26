@@ -35,6 +35,8 @@ dependencies:
   firebase_ml_vision: ^0.12.0+1
   image: ^3.0.2
   firebase_core: ^1.0.4
+  font_awesome_flutter: ^9.0.0
+  url_launcher: ^6.0.3
 
 dev_dependencies:
   flutter_test:
@@ -54,6 +56,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/mobilefacenet.tflite
+    - assets/logo.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
