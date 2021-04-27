@@ -171,7 +171,7 @@ class SignInState extends State<SignIn> {
                       fit: BoxFit.fitHeight,
                       child: Container(
                         width: width,
-                        height: width /
+                        height: width *
                             _cameraService.cameraController.value.aspectRatio,
                         child: Stack(
                           fit: StackFit.expand,

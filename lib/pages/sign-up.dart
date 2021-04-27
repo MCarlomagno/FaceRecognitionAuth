@@ -165,7 +165,7 @@ class SignUpState extends State<SignUp> {
                         fit: BoxFit.fitHeight,
                         child: Container(
                           width: width,
-                          height: width /
+                          height: width *
                               _cameraService.cameraController.value.aspectRatio,
                           child: Stack(
                             fit: StackFit.expand,
