@@ -6,13 +6,15 @@ class AppTextField extends StatelessWidget {
       @required this.labelText,
       @required this.controller,
       this.keyboardType = TextInputType.text,
-      this.autofocus = false})
+      this.autofocus = false,
+      this.isPassword = false})
       : super(key: key);
 
   final String labelText;
   final TextEditingController controller;
   final TextInputType keyboardType;
   final bool autofocus;
+  final bool isPassword;
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +41,7 @@ class AppTextField extends StatelessWidget {
           ),
         ),
       ),
+      obscureText: isPassword,
       keyboardType: keyboardType,
     );
   }
