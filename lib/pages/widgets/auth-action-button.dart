@@ -162,6 +162,7 @@ class _AuthActionButtonState extends State<AuthActionButton> {
                     : AppTextField(
                         controller: _passwordTextEditingController,
                         labelText: "Password",
+                        isPassword: true,
                       ),
                 SizedBox(height: 10),
                 Divider(),
