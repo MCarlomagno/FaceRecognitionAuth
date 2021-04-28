@@ -1,26 +1,19 @@
 import 'package:face_net_authentication/pages/db/database.dart';
+import 'package:face_net_authentication/pages/models/user.model.dart';
 import 'package:face_net_authentication/pages/profile.dart';
+import 'package:face_net_authentication/pages/widgets/app_button.dart';
 import 'package:face_net_authentication/services/facenet.service.dart';
 import 'package:flutter/material.dart';
 import '../home.dart';
-
-class User {
-  String user;
-  String password;
-
-  User({@required this.user, @required this.password});
-
-  static User fromDB(String dbuser) {
-    return new User(user: dbuser.split(':')[0], password: dbuser.split(':')[1]);
-  }
-}
+import 'app_text_field.dart';
 
 class AuthActionButton extends StatefulWidget {
   AuthActionButton(this._initializeControllerFuture,
-      {@required this.onPressed, @required this.isLogin});
+      {@required this.onPressed, @required this.isLogin, this.reload});
   final Future _initializeControllerFuture;
   final Function onPressed;
   final bool isLogin;
+  final Function reload;
   @override
   _AuthActionButtonState createState() => _AuthActionButtonState();
 }
@@ -74,11 +67,8 @@ class _AuthActionButtonState extends State<AuthActionButton> {
 
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton.extended(
-      label: widget.isLogin ? Text('Sign in') : Text('Sign up'),
-      icon: Icon(Icons.camera_alt),
-      // Provide an onPressed callback.
-      onPressed: () async {
+    return InkWell(
+      onTap: () async {
         try {
           // Ensure that the camera is initialized.
           await widget._initializeControllerFuture;
@@ -92,27 +82,61 @@ class _AuthActionButtonState extends State<AuthActionButton> {
                 this.predictedUser = User.fromDB(userAndPass);
               }
             }
-            Scaffold.of(context)
-                .showBottomSheet((context) => signSheet(context));
+            PersistentBottomSheetController bottomSheetController =
+                Scaffold.of(context)
+                    .showBottomSheet((context) => signSheet(context));
+
+            bottomSheetController.closed.whenComplete(() => widget.reload());
           }
         } catch (e) {
           // If an error occurs, log the error to the console.
           print(e);
         }
       },
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Color(0xFF0F0BDB),
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: Colors.blue.withOpacity(0.1),
+              blurRadius: 1,
+              offset: Offset(0, 2),
+            ),
+          ],
+        ),
+        alignment: Alignment.center,
+        padding: EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+        width: MediaQuery.of(context).size.width * 0.8,
+        height: 60,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'CAPTURE',
+              style: TextStyle(color: Colors.white),
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Icon(Icons.camera_alt, color: Colors.white)
+          ],
+        ),
+      ),
     );
   }
 
   signSheet(context) {
     return Container(
       padding: EdgeInsets.all(20),
-      height: 300,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           widget.isLogin && predictedUser != null
               ? Container(
                   child: Text(
-                    'Welcome back, ' + predictedUser.user + '! 😄',
+                    'Welcome back, ' + predictedUser.user + '.',
                     style: TextStyle(fontSize: 20),
                   ),
                 )
@@ -123,34 +147,51 @@ class _AuthActionButtonState extends State<AuthActionButton> {
                       style: TextStyle(fontSize: 20),
                     ))
                   : Container(),
-          !widget.isLogin
-              ? TextField(
-                  controller: _userTextEditingController,
-                  decoration: InputDecoration(labelText: "Your Name"),
-                )
-              : Container(),
-          widget.isLogin && predictedUser == null
-              ? Container()
-              : TextField(
-                  controller: _passwordTextEditingController,
-                  decoration: InputDecoration(labelText: "Password"),
-                  obscureText: true,
-                ),
-          widget.isLogin && predictedUser != null
-              ? ElevatedButton(
-                  child: Text('Login'),
-                  onPressed: () async {
-                    _signIn(context);
-                  },
-                )
-              : !widget.isLogin
-                  ? ElevatedButton(
-                      child: Text('Sign Up!'),
-                      onPressed: () async {
-                        await _signUp(context);
-                      },
-                    )
-                  : Container(),
+          Container(
+            child: Column(
+              children: [
+                !widget.isLogin
+                    ? AppTextField(
+                        controller: _userTextEditingController,
+                        labelText: "Your Name",
+                      )
+                    : Container(),
+                SizedBox(height: 10),
+                widget.isLogin && predictedUser == null
+                    ? Container()
+                    : AppTextField(
+                        controller: _passwordTextEditingController,
+                        labelText: "Password",
+                      ),
+                SizedBox(height: 10),
+                Divider(),
+                SizedBox(height: 10),
+                widget.isLogin && predictedUser != null
+                    ? AppButton(
+                        text: 'LOGIN',
+                        onPressed: () async {
+                          _signIn(context);
+                        },
+                        icon: Icon(
+                          Icons.login,
+                          color: Colors.white,
+                        ),
+                      )
+                    : !widget.isLogin
+                        ? AppButton(
+                            text: 'SIGN UP',
+                            onPressed: () async {
+                              await _signUp(context);
+                            },
+                            icon: Icon(
+                              Icons.person_add,
+                              color: Colors.white,
+                            ),
+                          )
+                        : Container(),
+              ],
+            ),
+          ),
         ],
       ),
     );
