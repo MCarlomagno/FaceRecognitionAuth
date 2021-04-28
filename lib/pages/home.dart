@@ -69,6 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       backgroundColor: Color(0XFFC7FFBE),
       appBar: AppBar(
+        leading: Container(),
         elevation: 0,
         backgroundColor: Colors.transparent,
         actions: <Widget>[
