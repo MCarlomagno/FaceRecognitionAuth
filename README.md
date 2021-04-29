@@ -1,5 +1,5 @@
 <div align="center">
-<img src="https://raw.githubusercontent.com/MCarlomagno/FaceRecognitionAuth/master/assets/banner.png" alt="banner image" width="300"/>
+<img src="https://raw.githubusercontent.com/MCarlomagno/FaceRecognitionAuth/master/assets/banner.png" alt="banner image"/>
 </div>
 
 # FaceNetAuthentication
