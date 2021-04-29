@@ -4,6 +4,7 @@ class AppButton extends StatelessWidget {
   AppButton(
       {this.onPressed,
       this.text,
+      this.color = const Color(0xFF0F0BDB),
       this.icon = const Icon(
         Icons.add,
         color: Colors.white,
@@ -11,6 +12,7 @@ class AppButton extends StatelessWidget {
   final Function onPressed;
   final String text;
   final Icon icon;
+  final Color color;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -18,7 +20,7 @@ class AppButton extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: Color(0xFF0F0BDB),
+          color: color,
           boxShadow: <BoxShadow>[
             BoxShadow(
               color: Colors.blue.withOpacity(0.1),

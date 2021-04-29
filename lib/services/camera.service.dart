@@ -21,6 +21,9 @@ class CameraService {
   ImageRotation _cameraRotation;
   ImageRotation get cameraRotation => this._cameraRotation;
 
+  String _imagePath;
+  String get imagePath => this._imagePath;
+
   Future startService(CameraDescription cameraDescription) async {
     this._cameraDescription = cameraDescription;
     this._cameraController = CameraController(
@@ -53,7 +56,9 @@ class CameraService {
 
   /// takes the picture and saves it in the given path 📸
   Future<XFile> takePicture() async {
-    return _cameraController.takePicture();
+    XFile file = await _cameraController.takePicture();
+    this._imagePath = file.path;
+    return file;
   }
 
   /// returns the image size 📏

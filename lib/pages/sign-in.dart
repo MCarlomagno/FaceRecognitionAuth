@@ -133,11 +133,11 @@ class SignInState extends State<SignIn> {
       await _cameraService.cameraController.stopImageStream();
       await Future.delayed(Duration(milliseconds: 200));
       XFile file = await _cameraService.takePicture();
-      imagePath = file.path;
 
       setState(() {
         _bottomSheetVisible = true;
         pictureTaked = true;
+        imagePath = file.path;
       });
 
       return true;
