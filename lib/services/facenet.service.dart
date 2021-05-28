@@ -1,9 +1,11 @@
+import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
 import 'package:face_net_authentication/pages/db/database.dart';
 import 'package:camera/camera.dart';
+import 'package:face_net_authentication/services/image_converter.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
-import 'package:tflite_flutter/tflite_flutter.dart' as tflite;
+import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:image/image.dart' as imglib;
 
 class FaceNetService {
@@ -18,7 +20,7 @@ class FaceNetService {
 
   DataBaseService _dataBaseService = DataBaseService();
 
-  tflite.Interpreter _interpreter;
+  Interpreter _interpreter;
 
   double threshold = 1.0;
 
@@ -29,19 +31,25 @@ class FaceNetService {
   dynamic data = {};
 
   Future loadModel() async {
+    Delegate delegate;
     try {
-      final gpuDelegateV2 = tflite.GpuDelegateV2(
-          options: tflite.GpuDelegateOptionsV2(
-              false,
-              tflite.TfLiteGpuInferenceUsage.fastSingleAnswer,
-              tflite.TfLiteGpuInferencePriority.minLatency,
-              tflite.TfLiteGpuInferencePriority.auto,
-              tflite.TfLiteGpuInferencePriority.auto));
+      if (Platform.isAndroid) {
+        delegate = GpuDelegateV2(
+            options: GpuDelegateOptionsV2(
+          false,
+          TfLiteGpuInferenceUsage.fastSingleAnswer,
+          TfLiteGpuInferencePriority.minLatency,
+          TfLiteGpuInferencePriority.auto,
+          TfLiteGpuInferencePriority.auto,
+        ));
+      } else if (Platform.isIOS) {
+        delegate = GpuDelegate(
+          options: GpuDelegateOptions(true, TFLGpuDelegateWaitType.active),
+        );
+      }
+      var interpreterOptions = InterpreterOptions()..addDelegate(delegate);
 
-      var interpreterOptions = tflite.InterpreterOptions()
-        ..addDelegate(gpuDelegateV2);
-      this._interpreter = await tflite.Interpreter.fromAsset(
-          'mobilefacenet.tflite',
+      this._interpreter = await Interpreter.fromAsset('mobilefacenet.tflite',
           options: interpreterOptions);
       print('model loaded successfully');
     } catch (e) {
@@ -88,7 +96,7 @@ class FaceNetService {
   /// crops the face from the image 💇
   /// [cameraImage]: current image
   /// [face]: face detected
-  _cropFace(CameraImage image, Face faceDetected) {
+  imglib.Image _cropFace(CameraImage image, Face faceDetected) {
     imglib.Image convertedImage = _convertCameraImage(image);
     double x = faceDetected.boundingBox.left - 10.0;
     double y = faceDetected.boundingBox.top - 10.0;
@@ -101,28 +109,7 @@ class FaceNetService {
   /// converts ___CameraImage___ type to ___Image___ type
   /// [image]: image to be converted
   imglib.Image _convertCameraImage(CameraImage image) {
-    int width = image.width;
-    int height = image.height;
-    var img = imglib.Image(width, height);
-    const int hexFF = 0xFF000000;
-    final int uvyButtonStride = image.planes[1].bytesPerRow;
-    final int uvPixelStride = image.planes[1].bytesPerPixel;
-    for (int x = 0; x < width; x++) {
-      for (int y = 0; y < height; y++) {
-        final int uvIndex =
-            uvPixelStride * (x / 2).floor() + uvyButtonStride * (y / 2).floor();
-        final int index = y * width + x;
-        final yp = image.planes[0].bytes[index];
-        final up = image.planes[1].bytes[uvIndex];
-        final vp = image.planes[2].bytes[uvIndex];
-        int r = (yp + vp * 1436 / 1024 - 179).round().clamp(0, 255);
-        int g = (yp - up * 46549 / 131072 + 44 - vp * 93604 / 131072 + 91)
-            .round()
-            .clamp(0, 255);
-        int b = (yp + up * 1814 / 1024 - 227).round().clamp(0, 255);
-        img.data[index] = hexFF | (b << 16) | (g << 8) | r;
-      }
-    }
+    var img = convertToImage(image);
     var img1 = imglib.copyRotate(img, -90);
     return img1;
   }
