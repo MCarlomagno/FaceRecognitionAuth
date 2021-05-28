@@ -1,0 +1,186 @@
+PODS:
+  - camera (0.0.1):
+    - Flutter
+  - Flutter (1.0.0)
+  - google_ml_kit (0.0.1):
+    - Flutter
+    - GoogleMLKit/BarcodeScanning
+    - GoogleMLKit/FaceDetection
+    - GoogleMLKit/ImageLabeling
+    - GoogleMLKit/ImageLabelingCustom
+    - GoogleMLKit/TextRecognition
+  - GoogleDataTransport (8.4.0):
+    - GoogleUtilities/Environment (~> 7.2)
+    - nanopb (~> 2.30908.0)
+    - PromisesObjC (~> 1.2)
+  - GoogleMLKit/BarcodeScanning (2.1.0):
+    - GoogleMLKit/MLKitCore
+    - MLKitBarcodeScanning (~> 1.2.0)
+  - GoogleMLKit/FaceDetection (2.1.0):
+    - GoogleMLKit/MLKitCore
+    - MLKitFaceDetection (~> 1.2.0)
+  - GoogleMLKit/ImageLabeling (2.1.0):
+    - GoogleMLKit/MLKitCore
+    - MLKitImageLabeling (~> 1.2.0)
+  - GoogleMLKit/ImageLabelingCustom (2.1.0):
+    - GoogleMLKit/MLKitCore
+    - MLKitImageLabelingCustom (~> 1.2.0)
+  - GoogleMLKit/MLKitCore (2.1.0):
+    - MLKitCommon (~> 2.1.0)
+  - GoogleMLKit/TextRecognition (2.1.0):
+    - GoogleMLKit/MLKitCore
+    - MLKitTextRecognition (~> 1.2.0)
+  - GoogleToolboxForMac/DebugUtils (2.3.1):
+    - GoogleToolboxForMac/Defines (= 2.3.1)
+  - GoogleToolboxForMac/Defines (2.3.1)
+  - GoogleToolboxForMac/Logger (2.3.1):
+    - GoogleToolboxForMac/Defines (= 2.3.1)
+  - "GoogleToolboxForMac/NSData+zlib (2.3.1)":
+    - GoogleToolboxForMac/Defines (= 2.3.1)
+  - "GoogleToolboxForMac/NSDictionary+URLArguments (2.3.1)":
+    - GoogleToolboxForMac/DebugUtils (= 2.3.1)
+    - GoogleToolboxForMac/Defines (= 2.3.1)
+    - "GoogleToolboxForMac/NSString+URLArguments (= 2.3.1)"
+  - "GoogleToolboxForMac/NSString+URLArguments (2.3.1)"
+  - GoogleUtilities/Environment (7.4.1):
+    - PromisesObjC (~> 1.2)
+  - GoogleUtilities/Logger (7.4.1):
+    - GoogleUtilities/Environment
+  - GoogleUtilities/UserDefaults (7.4.1):
+    - GoogleUtilities/Logger
+  - GoogleUtilitiesComponents (1.0.0):
+    - GoogleUtilities/Logger
+  - GTMSessionFetcher/Core (1.5.0)
+  - MLKitBarcodeScanning (1.2.0):
+    - MLKitCommon (~> 2.1)
+    - MLKitVision (~> 1.2)
+  - MLKitCommon (2.1.0):
+    - GoogleDataTransport (~> 8.0)
+    - GoogleToolboxForMac/Logger (~> 2.1)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
+    - "GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)"
+    - GoogleUtilities/UserDefaults (~> 7.0)
+    - GoogleUtilitiesComponents (~> 1.0)
+    - GTMSessionFetcher/Core (~> 1.1)
+    - Protobuf (~> 3.12)
+  - MLKitFaceDetection (1.2.0):
+    - MLKitCommon (~> 2.1)
+    - MLKitVision (~> 1.2)
+  - MLKitImageLabeling (1.2.0):
+    - MLKitCommon (~> 2.1)
+    - MLKitImageLabelingCommon (~> 1.2)
+    - MLKitVision (~> 1.2)
+    - MLKitVisionKit (~> 2.1)
+  - MLKitImageLabelingCommon (1.2.0):
+    - MLKitCommon (~> 2.1)
+    - MLKitVision (~> 1.2)
+  - MLKitImageLabelingCustom (1.2.0):
+    - MLKitCommon (~> 2.1)
+    - MLKitImageLabelingCommon (~> 1.2)
+    - MLKitVision (~> 1.2)
+    - MLKitVisionKit (~> 2.1)
+  - MLKitObjectDetectionCommon (1.2.0):
+    - MLKitCommon (~> 2.1)
+    - MLKitVision (~> 1.2)
+  - MLKitTextRecognition (1.2.0):
+    - MLKitCommon (~> 2.1)
+    - MLKitVision (~> 1.2)
+  - MLKitVision (1.2.0):
+    - GoogleToolboxForMac/Logger (~> 2.1)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
+    - GTMSessionFetcher/Core (~> 1.1)
+    - MLKitCommon (~> 2.1)
+    - Protobuf (~> 3.12)
+  - MLKitVisionKit (2.1.0):
+    - MLKitCommon (~> 2.1)
+    - MLKitImageLabelingCommon (~> 1.2)
+    - MLKitObjectDetectionCommon (~> 1.2)
+    - MLKitVision (~> 1.2)
+  - nanopb (2.30908.0):
+    - nanopb/decode (= 2.30908.0)
+    - nanopb/encode (= 2.30908.0)
+  - nanopb/decode (2.30908.0)
+  - nanopb/encode (2.30908.0)
+  - path_provider (0.0.1):
+    - Flutter
+  - PromisesObjC (1.2.12)
+  - Protobuf (3.17.0)
+  - tflite_flutter (0.1.0):
+    - Flutter
+  - url_launcher (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - camera (from `.symlinks/plugins/camera/ios`)
+  - Flutter (from `Flutter`)
+  - google_ml_kit (from `.symlinks/plugins/google_ml_kit/ios`)
+  - path_provider (from `.symlinks/plugins/path_provider/ios`)
+  - tflite_flutter (from `.symlinks/plugins/tflite_flutter/ios`)
+  - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
+
+SPEC REPOS:
+  trunk:
+    - GoogleDataTransport
+    - GoogleMLKit
+    - GoogleToolboxForMac
+    - GoogleUtilities
+    - GoogleUtilitiesComponents
+    - GTMSessionFetcher
+    - MLKitBarcodeScanning
+    - MLKitCommon
+    - MLKitFaceDetection
+    - MLKitImageLabeling
+    - MLKitImageLabelingCommon
+    - MLKitImageLabelingCustom
+    - MLKitObjectDetectionCommon
+    - MLKitTextRecognition
+    - MLKitVision
+    - MLKitVisionKit
+    - nanopb
+    - PromisesObjC
+    - Protobuf
+
+EXTERNAL SOURCES:
+  camera:
+    :path: ".symlinks/plugins/camera/ios"
+  Flutter:
+    :path: Flutter
+  google_ml_kit:
+    :path: ".symlinks/plugins/google_ml_kit/ios"
+  path_provider:
+    :path: ".symlinks/plugins/path_provider/ios"
+  tflite_flutter:
+    :path: ".symlinks/plugins/tflite_flutter/ios"
+  url_launcher:
+    :path: ".symlinks/plugins/url_launcher/ios"
+
+SPEC CHECKSUMS:
+  camera: a0ca5080336f7af47b88436e5e26da3dee5568f0
+  Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
+  google_ml_kit: 4c66a896b085f7e95226659ec22bd9af20751afe
+  GoogleDataTransport: cd9db2180fcecd8da1b561aea31e3e56cf834aa7
+  GoogleMLKit: 6ca2a10de262ee1017b52ac045e8967884ace992
+  GoogleToolboxForMac: 471e0c05d39506e50e6398f46fa9a12ae0efeff9
+  GoogleUtilities: f8a43108b38a68eebe8b3540e1f4f2d28843ce20
+  GoogleUtilitiesComponents: a69c0b3b369ba443e988141e75ef49d9010b1c80
+  GTMSessionFetcher: b3503b20a988c4e20cc189aa798fd18220133f52
+  MLKitBarcodeScanning: e9487b3e7c25d0f347dcbf253e7a540478919d9d
+  MLKitCommon: 9ed187a042139d51c0d8bf6a8301bb20b375c576
+  MLKitFaceDetection: 5b92261dd6e4205e3dab0df62537ac3f4e90e5db
+  MLKitImageLabeling: 21c8acbbfac1e9dd912f0cdc5bf8cb09f0f98125
+  MLKitImageLabelingCommon: 621e55f48a1709b886489925edb5939791b66f8c
+  MLKitImageLabelingCustom: ffcdbaa346f0117f113724a9273ff4c0ab13c744
+  MLKitObjectDetectionCommon: 7b197838c58568d44f34cf2fe874787ab43d63c1
+  MLKitTextRecognition: 332ce64ab281af7b38c806746e1fc53a58eb59ef
+  MLKitVision: 51385878c9100024478971856510f9271ff555b5
+  MLKitVisionKit: 92bddf95a91152419cdf3cbf2c2aed43cdf97cc2
+  nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
+  path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
+  PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
+  Protobuf: 7327d4444215b5f18e560a97f879ff5503c4581c
+  tflite_flutter: 9157a660578930a99728974f247369af1c3595d5
+  url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
+
+PODFILE CHECKSUM: e57a6b233c1c6fff78fd48a8b8a1b5b9fcc1e3a5
+
+COCOAPODS: 1.10.1
