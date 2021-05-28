@@ -3,16 +3,15 @@ import 'package:camera/camera.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:flutter/material.dart';
 
-class MLVisionService {
+class MLKitService {
   // singleton boilerplate
-  static final MLVisionService _cameraServiceService =
-      MLVisionService._internal();
+  static final MLKitService _cameraServiceService = MLKitService._internal();
 
-  factory MLVisionService() {
+  factory MLKitService() {
     return _cameraServiceService;
   }
   // singleton boilerplate
-  MLVisionService._internal();
+  MLKitService._internal();
 
   // service injection
   CameraService _cameraService = CameraService();

@@ -6,7 +6,7 @@ import 'package:face_net_authentication/pages/widgets/auth-action-button.dart';
 import 'package:face_net_authentication/pages/widgets/camera_header.dart';
 import 'package:face_net_authentication/services/camera.service.dart';
 import 'package:face_net_authentication/services/facenet.service.dart';
-import 'package:face_net_authentication/services/ml_vision_service.dart';
+import 'package:face_net_authentication/services/ml_kit_service.dart';
 import 'package:camera/camera.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +27,7 @@ class SignIn extends StatefulWidget {
 class SignInState extends State<SignIn> {
   /// Service injection
   CameraService _cameraService = CameraService();
-  MLVisionService _mlVisionService = MLVisionService();
+  MLKitService _mlKitService = MLKitService();
   FaceNetService _faceNetService = FaceNetService();
 
   Future _initializeControllerFuture;
@@ -84,7 +84,7 @@ class SignInState extends State<SignIn> {
         _detectingFaces = true;
 
         try {
-          List<Face> faces = await _mlVisionService.getFacesFromImage(image);
+          List<Face> faces = await _mlKitService.getFacesFromImage(image);
 
           if (faces != null) {
             if (faces.length > 0) {

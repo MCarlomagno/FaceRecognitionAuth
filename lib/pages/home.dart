@@ -2,7 +2,7 @@ import 'package:face_net_authentication/pages/db/database.dart';
 import 'package:face_net_authentication/pages/sign-in.dart';
 import 'package:face_net_authentication/pages/sign-up.dart';
 import 'package:face_net_authentication/services/facenet.service.dart';
-import 'package:face_net_authentication/services/ml_vision_service.dart';
+import 'package:face_net_authentication/services/ml_kit_service.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -17,7 +17,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   // Services injection
   FaceNetService _faceNetService = FaceNetService();
-  MLVisionService _mlVisionService = MLVisionService();
+  MLKitService _mlKitService = MLKitService();
   DataBaseService _dataBaseService = DataBaseService();
 
   CameraDescription cameraDescription;
@@ -48,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // start the services
     await _faceNetService.loadModel();
     await _dataBaseService.loadDB();
-    _mlVisionService.initialize();
+    _mlKitService.initialize();
 
     _setLoading(false);
   }
