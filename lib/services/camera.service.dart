@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:camera/camera.dart';
-import 'package:firebase_ml_vision/firebase_ml_vision.dart';
+import 'package:google_ml_kit/google_ml_kit.dart';
 
 class CameraService {
   // singleton boilerplate
@@ -18,8 +18,8 @@ class CameraService {
 
   CameraDescription _cameraDescription;
 
-  ImageRotation _cameraRotation;
-  ImageRotation get cameraRotation => this._cameraRotation;
+  InputImageRotation _cameraRotation;
+  InputImageRotation get cameraRotation => this._cameraRotation;
 
   String _imagePath;
   String get imagePath => this._imagePath;
@@ -41,16 +41,16 @@ class CameraService {
     return this._cameraController.initialize();
   }
 
-  ImageRotation rotationIntToImageRotation(int rotation) {
+  InputImageRotation rotationIntToImageRotation(int rotation) {
     switch (rotation) {
       case 90:
-        return ImageRotation.rotation90;
+        return InputImageRotation.Rotation_90deg;
       case 180:
-        return ImageRotation.rotation180;
+        return InputImageRotation.Rotation_180deg;
       case 270:
-        return ImageRotation.rotation270;
+        return InputImageRotation.Rotation_270deg;
       default:
-        return ImageRotation.rotation0;
+        return InputImageRotation.Rotation_0deg;
     }
   }
 

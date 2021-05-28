@@ -1,6 +1,6 @@
 import 'package:face_net_authentication/services/camera.service.dart';
 import 'package:camera/camera.dart';
-import 'package:firebase_ml_vision/firebase_ml_vision.dart';
+import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:flutter/material.dart';
 
 class MLVisionService {
@@ -21,7 +21,7 @@ class MLVisionService {
   FaceDetector get faceDetector => this._faceDetector;
 
   void initialize() {
-    this._faceDetector = FirebaseVision.instance.faceDetector(
+    this._faceDetector = GoogleMlKit.vision.faceDetector(
       FaceDetectorOptions(
         mode: FaceDetectorMode.accurate,
       ),
@@ -30,14 +30,13 @@ class MLVisionService {
 
   Future<List<Face>> getFacesFromImage(CameraImage image) async {
     /// preprocess the image  🧑🏻‍🔧
-    FirebaseVisionImageMetadata _firebaseImageMetadata =
-        FirebaseVisionImageMetadata(
-      rotation: _cameraService.cameraRotation,
-      rawFormat: image.format.raw,
+    InputImageData _firebaseImageMetadata = InputImageData(
+      imageRotation: _cameraService.cameraRotation,
+      inputImageFormat: InputImageFormatMethods.fromRawValue(image.format.raw),
       size: Size(image.width.toDouble(), image.height.toDouble()),
       planeData: image.planes.map(
         (Plane plane) {
-          return FirebaseVisionImagePlaneMetadata(
+          return InputImagePlaneMetadata(
             bytesPerRow: plane.bytesPerRow,
             height: plane.height,
             width: plane.width,
@@ -47,8 +46,10 @@ class MLVisionService {
     );
 
     /// Transform the image input for the _faceDetector 🎯
-    FirebaseVisionImage _firebaseVisionImage = FirebaseVisionImage.fromBytes(
-        image.planes[0].bytes, _firebaseImageMetadata);
+    InputImage _firebaseVisionImage = InputImage.fromBytes(
+      bytes: image.planes[0].bytes,
+      inputImageData: _firebaseImageMetadata,
+    );
 
     /// proces the image and makes inference 🤖
     List<Face> faces =
