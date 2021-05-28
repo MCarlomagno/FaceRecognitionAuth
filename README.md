@@ -53,7 +53,7 @@ flutter run
 
 ## Screenshots
 <div align="center">
-  <img src="https://raw.githubusercontent.com/MCarlomagno/assets/master/face-recog-auth-process.gif" alt="Face recognition auth"/>
+<img src="https://raw.githubusercontent.com/MCarlomagno/FaceRecognitionAuth/master/assets/banner.png" alt="banner image"/>
 </div>
 
 ## Licence
