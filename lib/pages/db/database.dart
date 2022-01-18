@@ -4,11 +4,10 @@ import 'package:path_provider/path_provider.dart';
 
 class DataBaseService {
   // singleton boilerplate
-  static final DataBaseService _cameraServiceService =
-      DataBaseService._internal();
+  static final DataBaseService _databaseService = DataBaseService._internal();
 
   factory DataBaseService() {
-    return _cameraServiceService;
+    return _databaseService;
   }
   // singleton boilerplate
   DataBaseService._internal();
