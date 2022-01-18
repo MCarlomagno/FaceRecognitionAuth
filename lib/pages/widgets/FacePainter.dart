@@ -1,6 +1,4 @@
-import 'dart:ui';
 import 'package:google_ml_kit/google_ml_kit.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class FacePainter extends CustomPainter {
