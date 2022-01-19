@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'home.dart';
-import 'dart:math' as math;
 
 class Profile extends StatelessWidget {
   const Profile(this.username, {Key key, this.imagePath}) : super(key: key);
@@ -21,7 +20,6 @@ class Profile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double mirror = math.pi;
     return Scaffold(
       backgroundColor: Color(0XFFC7FFBE),
       body: SafeArea(
