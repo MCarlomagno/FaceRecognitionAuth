@@ -1,12 +1,29 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
 
 class User {
   String user;
   String password;
+  List modelData;
 
-  User({@required this.user, @required this.password});
+  User({
+    this.user,
+    this.password,
+    this.modelData,
+  });
 
-  static User fromDB(String dbuser) {
-    return new User(user: dbuser.split(':')[0], password: dbuser.split(':')[1]);
+  static User fromMap(Map<String, dynamic> user) {
+    return new User(
+      user: user['user'],
+      password: user['password'],
+      modelData: jsonDecode(user['model_data']),
+    );
+  }
+
+  toMap() {
+    return {
+      'user': user,
+      'password': password,
+      'model_data': jsonEncode(modelData),
+    };
   }
 }

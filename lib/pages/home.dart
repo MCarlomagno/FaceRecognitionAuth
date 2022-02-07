@@ -1,4 +1,4 @@
-import 'package:face_net_authentication/pages/db/database.dart';
+import 'package:face_net_authentication/pages/db/databse_helper.dart';
 import 'package:face_net_authentication/pages/sign-in.dart';
 import 'package:face_net_authentication/pages/sign-up.dart';
 import 'package:face_net_authentication/services/facenet.service.dart';
@@ -18,7 +18,7 @@ class _MyHomePageState extends State<MyHomePage> {
   // Services injection
   FaceNetService _faceNetService = FaceNetService();
   MLKitService _mlKitService = MLKitService();
-  DataBaseService _dataBaseService = DataBaseService();
+  // DataBaseService _dataBaseService = DataBaseService();
 
   CameraDescription cameraDescription;
   bool loading = false;
@@ -47,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     // start the services
     await _faceNetService.loadModel();
-    await _dataBaseService.loadDB();
+    // await _dataBaseService.loadDB();
     _mlKitService.initialize();
 
     _setLoading(false);
@@ -83,7 +83,8 @@ class _MyHomePageState extends State<MyHomePage> {
               onSelected: (value) {
                 switch (value) {
                   case 'Clear DB':
-                    _dataBaseService.cleanDB();
+                    DatabaseHelper _dataBaseHelper = DatabaseHelper.instance;
+                    _dataBaseHelper.deleteAll();
                     break;
                 }
               },

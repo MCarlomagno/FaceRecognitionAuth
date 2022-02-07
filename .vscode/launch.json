@@ -8,6 +8,11 @@
             "name": "FaceRecognitionAuth",
             "request": "launch",
             "type": "dart"
+        }, {
+            "name": "moto one",
+            "deviceId": "ZE222GZGD7",
+            "request": "launch",
+            "type": "dart",
         }
     ]
 }
