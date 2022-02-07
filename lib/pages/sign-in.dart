@@ -1,4 +1,3 @@
-// A screen that allows users to take a picture using a given camera.
 import 'dart:async';
 import 'dart:io';
 import 'package:face_net_authentication/pages/widgets/FacePainter.dart';
@@ -47,19 +46,17 @@ class SignInState extends State<SignIn> {
   @override
   void initState() {
     super.initState();
-
-    /// starts the camera & start framing faces
     _start();
   }
 
   @override
   void dispose() {
-    // Dispose of the controller when the widget is disposed.
     _cameraService.dispose();
+    _mlKitService.dispose();
+    _faceNetService.dispose();
     super.dispose();
   }
 
-  /// starts the camera & start framing faces
   _start() async {
     _initializeControllerFuture =
         _cameraService.startService(widget.cameraDescription);
@@ -72,13 +69,11 @@ class SignInState extends State<SignIn> {
     _frameFaces();
   }
 
-  /// draws rectangles when detects faces
   _frameFaces() {
     imageSize = _cameraService.getImageSize();
 
     _cameraService.cameraController.startImageStream((image) async {
       if (_cameraService.cameraController != null) {
-        // if its currently busy, avoids overprocessing
         if (_detectingFaces) return;
 
         _detectingFaces = true;
@@ -88,7 +83,6 @@ class SignInState extends State<SignIn> {
 
           if (faces != null) {
             if (faces.length > 0) {
-              // preprocessing the image
               setState(() {
                 faceDetected = faces[0];
               });
@@ -113,7 +107,6 @@ class SignInState extends State<SignIn> {
     });
   }
 
-  /// handles the button pressed event
   Future<void> onShot() async {
     if (faceDetected == null) {
       showDialog(

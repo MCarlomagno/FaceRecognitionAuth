@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:face_net_authentication/pages/models/user.model.dart';
@@ -53,23 +52,6 @@ class DatabaseHelper {
     Database db = await instance.database;
     List<Map<String, dynamic>> users = await db.query(table);
     return users.map((u) => User.fromMap(u)).toList();
-  }
-
-  Future<int> queryRowCount() async {
-    Database db = await instance.database;
-    return Sqflite.firstIntValue(
-        await db.rawQuery('SELECT COUNT(*) FROM $table'));
-  }
-
-  Future<int> update(Map<String, dynamic> row) async {
-    Database db = await instance.database;
-    int id = row[columnId];
-    return await db.update(table, row, where: '$columnId = ?', whereArgs: [id]);
-  }
-
-  Future<int> delete(int id) async {
-    Database db = await instance.database;
-    return await db.delete(table, where: '$columnId = ?', whereArgs: [id]);
   }
 
   Future<void> deleteAll() async {

@@ -21,7 +21,6 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0XFFC7FFBE),
       body: SafeArea(
         child: Container(
           child: Column(

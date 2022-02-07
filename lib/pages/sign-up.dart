@@ -43,19 +43,15 @@ class SignUpState extends State<SignUp> {
   @override
   void initState() {
     super.initState();
-
-    /// starts the camera & start framing faces
     _start();
   }
 
   @override
   void dispose() {
-    // Dispose of the controller when the widget is disposed.
     _cameraService.dispose();
     super.dispose();
   }
 
-  /// starts the camera & start framing faces
   _start() async {
     _initializeControllerFuture =
         _cameraService.startService(widget.cameraDescription);
@@ -68,7 +64,6 @@ class SignUpState extends State<SignUp> {
     _frameFaces();
   }
 
-  /// handles the button pressed event
   Future<void> onShot() async {
     if (faceDetected == null) {
       showDialog(
@@ -98,13 +93,11 @@ class SignUpState extends State<SignUp> {
     }
   }
 
-  /// draws rectangles when detects faces
   _frameFaces() {
     imageSize = _cameraService.getImageSize();
 
     _cameraService.cameraController.startImageStream((image) async {
       if (_cameraService.cameraController != null) {
-        // if its currently busy, avoids overprocessing
         if (_detectingFaces) return;
 
         _detectingFaces = true;
