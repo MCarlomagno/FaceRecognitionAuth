@@ -1,4 +1,4 @@
-import 'package:face_net_authentication/pages/db/database.dart';
+import 'package:face_net_authentication/pages/db/databse_helper.dart';
 import 'package:face_net_authentication/pages/models/user.model.dart';
 import 'package:face_net_authentication/pages/profile.dart';
 import 'package:face_net_authentication/pages/widgets/app_button.dart';
@@ -22,7 +22,7 @@ class AuthActionButton extends StatefulWidget {
 class _AuthActionButtonState extends State<AuthActionButton> {
   /// service injection
   final FaceNetService _faceNetService = FaceNetService();
-  final DataBaseService _dataBaseService = DataBaseService();
+  // final DataBaseService _dataBaseService = DataBaseService();
   final CameraService _cameraService = CameraService();
 
   final TextEditingController _userTextEditingController =
@@ -33,13 +33,22 @@ class _AuthActionButtonState extends State<AuthActionButton> {
   User predictedUser;
 
   Future _signUp(context) async {
+    DatabaseHelper _databaseHelper = DatabaseHelper.instance;
+
     /// gets predicted data from facenet service (user face detected)
     List predictedData = _faceNetService.predictedData;
     String user = _userTextEditingController.text;
     String password = _passwordTextEditingController.text;
 
     /// creates a new user in the 'database'
-    await _dataBaseService.saveData(user, password, predictedData);
+    // await _dataBaseService.saveData(user, password, predictedData);
+
+    User userToSave = User(
+      user: user,
+      password: password,
+      modelData: predictedData,
+    );
+    await _databaseHelper.insert(userToSave);
 
     /// resets the face stored in the face net sevice
     this._faceNetService.setPredictedData(null);
@@ -70,8 +79,8 @@ class _AuthActionButtonState extends State<AuthActionButton> {
     }
   }
 
-  String _predictUser() {
-    String userAndPass = _faceNetService.predict();
+  Future<User> _predictUser() async {
+    User userAndPass = await _faceNetService.predict();
     return userAndPass ?? null;
   }
 
@@ -87,9 +96,9 @@ class _AuthActionButtonState extends State<AuthActionButton> {
 
           if (faceDetected) {
             if (widget.isLogin) {
-              var userAndPass = _predictUser();
-              if (userAndPass != null) {
-                this.predictedUser = User.fromDB(userAndPass);
+              var user = await _predictUser();
+              if (user != null) {
+                this.predictedUser = user;
               }
             }
             PersistentBottomSheetController bottomSheetController =
