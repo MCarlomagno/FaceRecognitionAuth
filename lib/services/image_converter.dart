@@ -3,16 +3,14 @@ import 'package:camera/camera.dart';
 
 imglib.Image convertToImage(CameraImage image) {
   try {
-    imglib.Image img;
     if (image.format.group == ImageFormatGroup.yuv420) {
-      img = _convertYUV420(image);
+      return _convertYUV420(image);
     } else if (image.format.group == ImageFormatGroup.bgra8888) {
-      img = _convertBGRA8888(image);
+      return _convertBGRA8888(image);
     }
-
-    return img;
+    throw Exception('Image format not supported');
   } catch (e) {
-    print(">>>>>>>>>>>> ERROR:" + e.toString());
+    print("ERROR:" + e.toString());
   }
   return null;
 }

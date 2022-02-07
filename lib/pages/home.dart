@@ -15,10 +15,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  // Services injection
   FaceNetService _faceNetService = FaceNetService();
   MLKitService _mlKitService = MLKitService();
-  // DataBaseService _dataBaseService = DataBaseService();
 
   CameraDescription cameraDescription;
   bool loading = false;
@@ -31,29 +29,20 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     _startUp();
   }
-
-  /// 1 Obtain a list of the available cameras on the device.
-  /// 2 loads the face net model
   _startUp() async {
     _setLoading(true);
 
     List<CameraDescription> cameras = await availableCameras();
-
-    /// takes the front camera
     cameraDescription = cameras.firstWhere(
       (CameraDescription camera) =>
           camera.lensDirection == CameraLensDirection.front,
     );
 
-    // start the services
     await _faceNetService.loadModel();
-    // await _dataBaseService.loadDB();
     _mlKitService.initialize();
-
     _setLoading(false);
   }
 
-  // shows or hides the circular progress indicator
   _setLoading(bool value) {
     setState(() {
       loading = value;
@@ -67,7 +56,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0XFFC7FFBE),
       appBar: AppBar(
         leading: Container(),
         elevation: 0,

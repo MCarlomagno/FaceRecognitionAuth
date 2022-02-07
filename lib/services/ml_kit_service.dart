@@ -4,16 +4,13 @@ import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:flutter/material.dart';
 
 class MLKitService {
-  // singleton boilerplate
   static final MLKitService _cameraServiceService = MLKitService._internal();
 
   factory MLKitService() {
     return _cameraServiceService;
   }
-  // singleton boilerplate
   MLKitService._internal();
 
-  // service injection
   CameraService _cameraService = CameraService();
 
   FaceDetector _faceDetector;
@@ -28,7 +25,6 @@ class MLKitService {
   }
 
   Future<List<Face>> getFacesFromImage(CameraImage image) async {
-    /// preprocess the image  🧑🏻‍🔧
     InputImageData _firebaseImageMetadata = InputImageData(
       imageRotation: _cameraService.cameraRotation,
       inputImageFormat: InputImageFormatMethods.fromRawValue(image.format.raw),
@@ -44,15 +40,17 @@ class MLKitService {
       ).toList(),
     );
 
-    /// Transform the image input for the _faceDetector 🎯
     InputImage _firebaseVisionImage = InputImage.fromBytes(
       bytes: image.planes[0].bytes,
       inputImageData: _firebaseImageMetadata,
     );
 
-    /// proces the image and makes inference 🤖
     List<Face> faces =
         await this._faceDetector.processImage(_firebaseVisionImage);
     return faces;
+  }
+
+  dispose() {
+    _cameraServiceService.dispose();
   }
 }

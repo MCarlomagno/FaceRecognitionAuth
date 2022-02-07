@@ -142,4 +142,8 @@ class FaceNetService {
   void setPredictedData(value) {
     this._predictedData = value;
   }
+
+  dispose() {
+    
+  }
 }
