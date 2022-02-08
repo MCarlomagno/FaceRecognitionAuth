@@ -1,3 +1,4 @@
+import 'package:face_net_authentication/locator.dart';
 import 'package:face_net_authentication/pages/db/databse_helper.dart';
 import 'package:face_net_authentication/pages/models/user.model.dart';
 import 'package:face_net_authentication/pages/profile.dart';
@@ -20,10 +21,8 @@ class AuthActionButton extends StatefulWidget {
 }
 
 class _AuthActionButtonState extends State<AuthActionButton> {
-  /// service injection
-  final FaceNetService _faceNetService = FaceNetService();
-  // final DataBaseService _dataBaseService = DataBaseService();
-  final CameraService _cameraService = CameraService();
+  final FaceNetService _faceNetService = locator<FaceNetService>();
+  final CameraService _cameraService = locator<CameraService>();
 
   final TextEditingController _userTextEditingController =
       TextEditingController(text: '');
