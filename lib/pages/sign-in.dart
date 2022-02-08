@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:face_net_authentication/locator.dart';
 import 'package:face_net_authentication/pages/widgets/FacePainter.dart';
 import 'package:face_net_authentication/pages/widgets/auth-action-button.dart';
 import 'package:face_net_authentication/pages/widgets/camera_header.dart';
@@ -24,10 +25,9 @@ class SignIn extends StatefulWidget {
 }
 
 class SignInState extends State<SignIn> {
-  /// Service injection
-  CameraService _cameraService = CameraService();
-  MLKitService _mlKitService = MLKitService();
-  FaceNetService _faceNetService = FaceNetService();
+  CameraService _cameraService = locator<CameraService>();
+  MLKitService _mlKitService = locator<MLKitService>();
+  FaceNetService _faceNetService = locator<FaceNetService>();
 
   Future _initializeControllerFuture;
 

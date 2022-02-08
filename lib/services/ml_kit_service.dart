@@ -1,23 +1,17 @@
+import 'package:face_net_authentication/locator.dart';
 import 'package:face_net_authentication/services/camera.service.dart';
 import 'package:camera/camera.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:flutter/material.dart';
 
 class MLKitService {
-  static final MLKitService _cameraServiceService = MLKitService._internal();
-
-  factory MLKitService() {
-    return _cameraServiceService;
-  }
-  MLKitService._internal();
-
-  CameraService _cameraService = CameraService();
+  CameraService _cameraService = locator<CameraService>();
 
   FaceDetector _faceDetector;
-  FaceDetector get faceDetector => this._faceDetector;
+  FaceDetector get faceDetector => _faceDetector;
 
   void initialize() {
-    this._faceDetector = GoogleMlKit.vision.faceDetector(
+    _faceDetector = GoogleMlKit.vision.faceDetector(
       FaceDetectorOptions(
         mode: FaceDetectorMode.accurate,
       ),
@@ -51,6 +45,6 @@ class MLKitService {
   }
 
   dispose() {
-    _cameraServiceService.dispose();
+    _faceDetector.close();
   }
 }

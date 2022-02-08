@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:math' as math;
+import 'package:face_net_authentication/locator.dart';
 import 'package:face_net_authentication/pages/widgets/FacePainter.dart';
 import 'package:face_net_authentication/pages/widgets/auth-action-button.dart';
 import 'package:face_net_authentication/pages/widgets/camera_header.dart';
@@ -36,9 +37,9 @@ class SignUpState extends State<SignUp> {
   bool _bottomSheetVisible = false;
 
   // service injection
-  MLKitService _mlKitService = MLKitService();
-  CameraService _cameraService = CameraService();
-  FaceNetService _faceNetService = FaceNetService();
+  MLKitService _mlKitService = locator<MLKitService>();
+  CameraService _cameraService = locator<CameraService>();
+  FaceNetService _faceNetService = locator<FaceNetService>();
 
   @override
   void initState() {

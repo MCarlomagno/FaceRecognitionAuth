@@ -10,21 +10,12 @@ import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:image/image.dart' as imglib;
 
 class FaceNetService {
-  static final FaceNetService _faceNetService = FaceNetService._internal();
-
-  factory FaceNetService() {
-    return _faceNetService;
-  }
-  FaceNetService._internal();
 
   Interpreter _interpreter;
-
   double threshold = 0.5;
 
   List _predictedData;
-  List get predictedData => this._predictedData;
-
-  dynamic data = {};
+  List get predictedData => _predictedData;
 
   Future loadModel() async {
     Delegate delegate;

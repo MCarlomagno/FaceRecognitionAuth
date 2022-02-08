@@ -1,3 +1,4 @@
+import 'package:face_net_authentication/locator.dart';
 import 'package:face_net_authentication/pages/db/databse_helper.dart';
 import 'package:face_net_authentication/pages/sign-in.dart';
 import 'package:face_net_authentication/pages/sign-up.dart';
@@ -15,8 +16,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  FaceNetService _faceNetService = FaceNetService();
-  MLKitService _mlKitService = MLKitService();
+  FaceNetService _faceNetService = locator<FaceNetService>();
+  MLKitService _mlKitService = locator<MLKitService>();
 
   CameraDescription cameraDescription;
   bool loading = false;
