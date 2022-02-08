@@ -4,7 +4,7 @@ import 'package:face_net_authentication/pages/models/user.model.dart';
 import 'package:face_net_authentication/pages/profile.dart';
 import 'package:face_net_authentication/pages/widgets/app_button.dart';
 import 'package:face_net_authentication/services/camera.service.dart';
-import 'package:face_net_authentication/services/facenet.service.dart';
+import 'package:face_net_authentication/services/ml_service.dart';
 import 'package:flutter/material.dart';
 import '../home.dart';
 import 'app_text_field.dart';
@@ -21,7 +21,7 @@ class AuthActionButton extends StatefulWidget {
 }
 
 class _AuthActionButtonState extends State<AuthActionButton> {
-  final FaceNetService _faceNetService = locator<FaceNetService>();
+  final MLService _mlService = locator<MLService>();
   final CameraService _cameraService = locator<CameraService>();
 
   final TextEditingController _userTextEditingController =
@@ -35,7 +35,7 @@ class _AuthActionButtonState extends State<AuthActionButton> {
     DatabaseHelper _databaseHelper = DatabaseHelper.instance;
 
     /// gets predicted data from facenet service (user face detected)
-    List predictedData = _faceNetService.predictedData;
+    List predictedData = _mlService.predictedData;
     String user = _userTextEditingController.text;
     String password = _passwordTextEditingController.text;
 
@@ -50,7 +50,7 @@ class _AuthActionButtonState extends State<AuthActionButton> {
     await _databaseHelper.insert(userToSave);
 
     /// resets the face stored in the face net sevice
-    this._faceNetService.setPredictedData(null);
+    this._mlService.setPredictedData(null);
     Navigator.push(context,
         MaterialPageRoute(builder: (BuildContext context) => MyHomePage()));
   }
@@ -79,7 +79,7 @@ class _AuthActionButtonState extends State<AuthActionButton> {
   }
 
   Future<User> _predictUser() async {
-    User userAndPass = await _faceNetService.predict();
+    User userAndPass = await _mlService.predict();
     return userAndPass ?? null;
   }
 

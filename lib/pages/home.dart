@@ -2,8 +2,8 @@ import 'package:face_net_authentication/locator.dart';
 import 'package:face_net_authentication/pages/db/databse_helper.dart';
 import 'package:face_net_authentication/pages/sign-in.dart';
 import 'package:face_net_authentication/pages/sign-up.dart';
-import 'package:face_net_authentication/services/facenet.service.dart';
-import 'package:face_net_authentication/services/ml_kit_service.dart';
+import 'package:face_net_authentication/services/ml_service.dart';
+import 'package:face_net_authentication/services/face_detector_service.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -16,8 +16,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  FaceNetService _faceNetService = locator<FaceNetService>();
-  MLKitService _mlKitService = locator<MLKitService>();
+  MLService _mlService= locator<MLService>();
+  FaceDetectorService _mlKitService = locator<FaceDetectorService>();
 
   CameraDescription cameraDescription;
   bool loading = false;
@@ -39,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
           camera.lensDirection == CameraLensDirection.front,
     );
 
-    await _faceNetService.loadModel();
+    await _mlService.loadModel();
     _mlKitService.initialize();
     _setLoading(false);
   }

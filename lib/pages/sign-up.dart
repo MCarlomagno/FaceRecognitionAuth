@@ -6,8 +6,8 @@ import 'package:face_net_authentication/pages/widgets/FacePainter.dart';
 import 'package:face_net_authentication/pages/widgets/auth-action-button.dart';
 import 'package:face_net_authentication/pages/widgets/camera_header.dart';
 import 'package:face_net_authentication/services/camera.service.dart';
-import 'package:face_net_authentication/services/facenet.service.dart';
-import 'package:face_net_authentication/services/ml_kit_service.dart';
+import 'package:face_net_authentication/services/ml_service.dart';
+import 'package:face_net_authentication/services/face_detector_service.dart';
 import 'package:camera/camera.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:flutter/material.dart';
@@ -37,9 +37,9 @@ class SignUpState extends State<SignUp> {
   bool _bottomSheetVisible = false;
 
   // service injection
-  MLKitService _mlKitService = locator<MLKitService>();
+  FaceDetectorService _faceDetectorService = locator<FaceDetectorService>();
   CameraService _cameraService = locator<CameraService>();
-  FaceNetService _faceNetService = locator<FaceNetService>();
+  MLService _mlService = locator<MLService>();
 
   @override
   void initState() {
@@ -104,7 +104,7 @@ class SignUpState extends State<SignUp> {
         _detectingFaces = true;
 
         try {
-          List<Face> faces = await _mlKitService.getFacesFromImage(image);
+          List<Face> faces = await _faceDetectorService.getFacesFromImage(image);
 
           if (faces.length > 0) {
             setState(() {
@@ -112,7 +112,7 @@ class SignUpState extends State<SignUp> {
             });
 
             if (_saving) {
-              _faceNetService.setCurrentPrediction(image, faceDetected);
+              _mlService.setCurrentPrediction(image, faceDetected);
               setState(() {
                 _saving = false;
               });
