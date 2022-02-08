@@ -5,8 +5,8 @@ import 'package:face_net_authentication/pages/widgets/FacePainter.dart';
 import 'package:face_net_authentication/pages/widgets/auth-action-button.dart';
 import 'package:face_net_authentication/pages/widgets/camera_header.dart';
 import 'package:face_net_authentication/services/camera.service.dart';
-import 'package:face_net_authentication/services/facenet.service.dart';
-import 'package:face_net_authentication/services/ml_kit_service.dart';
+import 'package:face_net_authentication/services/ml_service.dart';
+import 'package:face_net_authentication/services/face_detector_service.dart';
 import 'package:camera/camera.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:flutter/material.dart';
@@ -26,8 +26,8 @@ class SignIn extends StatefulWidget {
 
 class SignInState extends State<SignIn> {
   CameraService _cameraService = locator<CameraService>();
-  MLKitService _mlKitService = locator<MLKitService>();
-  FaceNetService _faceNetService = locator<FaceNetService>();
+  FaceDetectorService _faceDetectorService = locator<FaceDetectorService>();
+  MLService _mlService = locator<MLService>();
 
   Future _initializeControllerFuture;
 
@@ -52,8 +52,8 @@ class SignInState extends State<SignIn> {
   @override
   void dispose() {
     _cameraService.dispose();
-    _mlKitService.dispose();
-    _faceNetService.dispose();
+    _mlService.dispose();
+    _faceDetectorService.dispose();
     super.dispose();
   }
 
@@ -79,7 +79,7 @@ class SignInState extends State<SignIn> {
         _detectingFaces = true;
 
         try {
-          List<Face> faces = await _mlKitService.getFacesFromImage(image);
+          List<Face> faces = await _faceDetectorService.getFacesFromImage(image);
 
           if (faces != null) {
             if (faces.length > 0) {
@@ -89,7 +89,7 @@ class SignInState extends State<SignIn> {
 
               if (_saving) {
                 _saving = false;
-                _faceNetService.setCurrentPrediction(image, faceDetected);
+                _mlService.setCurrentPrediction(image, faceDetected);
               }
             } else {
               setState(() {

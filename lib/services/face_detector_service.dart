@@ -4,7 +4,7 @@ import 'package:camera/camera.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:flutter/material.dart';
 
-class MLKitService {
+class FaceDetectorService {
   CameraService _cameraService = locator<CameraService>();
 
   FaceDetector _faceDetector;
@@ -39,8 +39,7 @@ class MLKitService {
       inputImageData: _firebaseImageMetadata,
     );
 
-    List<Face> faces =
-        await this._faceDetector.processImage(_firebaseVisionImage);
+    List<Face> faces = await _faceDetector.processImage(_firebaseVisionImage);
     return faces;
   }
 
