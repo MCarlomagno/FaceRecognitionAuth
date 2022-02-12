@@ -1,13 +1,12 @@
 import 'dart:ui';
 
 import 'package:camera/camera.dart';
+import 'package:flutter/foundation.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 
 class CameraService {
   CameraController _cameraController;
   CameraController get cameraController => this._cameraController;
-
-  CameraDescription _cameraDescription;
 
   InputImageRotation _cameraRotation;
   InputImageRotation get cameraRotation => this._cameraRotation;
@@ -15,21 +14,30 @@ class CameraService {
   String _imagePath;
   String get imagePath => this._imagePath;
 
-  Future startService(CameraDescription cameraDescription) async {
-    this._cameraDescription = cameraDescription;
+  Future<void> initialize() async {
+    if (this._cameraController != null) return;
+    CameraDescription description = await _getCameraDescription();
+    await _setupCameraController(description: description);
+    this._cameraRotation = rotationIntToImageRotation(
+      description.sensorOrientation,
+    );
+  }
+
+  Future<CameraDescription> _getCameraDescription() async {
+    List<CameraDescription> cameras = await availableCameras();
+    return cameras.firstWhere((CameraDescription camera) =>
+        camera.lensDirection == CameraLensDirection.front);
+  }
+
+  Future _setupCameraController({
+    @required CameraDescription description,
+  }) async {
     this._cameraController = CameraController(
-      this._cameraDescription,
+      description,
       ResolutionPreset.high,
       enableAudio: false,
     );
-
-    // sets the rotation of the image
-    this._cameraRotation = rotationIntToImageRotation(
-      this._cameraDescription.sensorOrientation,
-    );
-
-    // Next, initialize the controller. This returns a Future.
-    return this._cameraController.initialize();
+    await this._cameraController.initialize();
   }
 
   InputImageRotation rotationIntToImageRotation(int rotation) {
@@ -46,19 +54,22 @@ class CameraService {
   }
 
   Future<XFile> takePicture() async {
+    await _cameraController.stopImageStream();
     XFile file = await _cameraController.takePicture();
     this._imagePath = file.path;
     return file;
   }
 
   Size getImageSize() {
+    assert(_cameraController != null, 'Camera controller not initialized');
     return Size(
       _cameraController.value.previewSize.height,
       _cameraController.value.previewSize.width,
     );
   }
 
-  dispose() {
-    this._cameraController.dispose();
+  dispose() async {
+    await this._cameraController.dispose();
+    this._cameraController = null;
   }
 }

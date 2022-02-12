@@ -13,9 +13,7 @@ import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:flutter/material.dart';
 
 class SignUp extends StatefulWidget {
-  final CameraDescription cameraDescription;
-
-  const SignUp({Key key, @required this.cameraDescription}) : super(key: key);
+  const SignUp({Key key}) : super(key: key);
 
   @override
   SignUpState createState() => SignUpState();
@@ -27,12 +25,10 @@ class SignUpState extends State<SignUp> {
   Size imageSize;
 
   bool _detectingFaces = false;
-  bool pictureTaked = false;
+  bool pictureTaken = false;
 
-  Future _initializeControllerFuture;
-  bool cameraInitializated = false;
+  bool _initializing = false;
 
-  // switchs when the user press the camera
   bool _saving = false;
   bool _bottomSheetVisible = false;
 
@@ -54,13 +50,9 @@ class SignUpState extends State<SignUp> {
   }
 
   _start() async {
-    _initializeControllerFuture =
-        _cameraService.startService(widget.cameraDescription);
-    await _initializeControllerFuture;
-
-    setState(() {
-      cameraInitializated = true;
-    });
+    setState(() => _initializing = true);
+    await _cameraService.initialize();
+    setState(() => _initializing = false);
 
     _frameFaces();
   }
@@ -87,7 +79,7 @@ class SignUpState extends State<SignUp> {
 
       setState(() {
         _bottomSheetVisible = true;
-        pictureTaked = true;
+        pictureTaken = true;
       });
 
       return true;
@@ -104,13 +96,9 @@ class SignUpState extends State<SignUp> {
         _detectingFaces = true;
 
         try {
-          List<Face> faces = await _faceDetectorService.getFacesFromImage(image);
+          await _faceDetectorService.detectFacesFromImage(image);
 
-          if (faces.length > 0) {
-            setState(() {
-              faceDetected = faces[0];
-            });
-
+          if (_faceDetectorService.faces.isNotEmpty) {
             if (_saving) {
               _mlService.setCurrentPrediction(image, faceDetected);
               setState(() {
@@ -139,8 +127,7 @@ class SignUpState extends State<SignUp> {
   _reload() {
     setState(() {
       _bottomSheetVisible = false;
-      cameraInitializated = false;
-      pictureTaked = false;
+      pictureTaken = false;
     });
     this._start();
   }
@@ -150,62 +137,62 @@ class SignUpState extends State<SignUp> {
     final double mirror = math.pi;
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
+
+    Widget body;
+    if (_initializing) {
+      body = Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+
+    if (!_initializing && pictureTaken) {
+      body = Container(
+        width: width,
+        height: height,
+        child: Transform(
+            alignment: Alignment.center,
+            child: FittedBox(
+              fit: BoxFit.cover,
+              child: Image.file(File(imagePath)),
+            ),
+            transform: Matrix4.rotationY(mirror)),
+      );
+    }
+
+    if (!_initializing && !pictureTaken) {
+      body = Transform.scale(
+        scale: 1.0,
+        child: AspectRatio(
+          aspectRatio: MediaQuery.of(context).size.aspectRatio,
+          child: OverflowBox(
+            alignment: Alignment.center,
+            child: FittedBox(
+              fit: BoxFit.fitHeight,
+              child: Container(
+                width: width,
+                height:
+                    width * _cameraService.cameraController.value.aspectRatio,
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: <Widget>[
+                    CameraPreview(_cameraService.cameraController),
+                    CustomPaint(
+                      painter:
+                          FacePainter(face: faceDetected, imageSize: imageSize),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+
     return Scaffold(
         body: Stack(
           children: [
-            FutureBuilder<void>(
-              future: _initializeControllerFuture,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
-                  if (pictureTaked) {
-                    return Container(
-                      width: width,
-                      height: height,
-                      child: Transform(
-                          alignment: Alignment.center,
-                          child: FittedBox(
-                            fit: BoxFit.cover,
-                            child: Image.file(File(imagePath)),
-                          ),
-                          transform: Matrix4.rotationY(mirror)),
-                    );
-                  } else {
-                    return Transform.scale(
-                      scale: 1.0,
-                      child: AspectRatio(
-                        aspectRatio: MediaQuery.of(context).size.aspectRatio,
-                        child: OverflowBox(
-                          alignment: Alignment.center,
-                          child: FittedBox(
-                            fit: BoxFit.fitHeight,
-                            child: Container(
-                              width: width,
-                              height: width *
-                                  _cameraService
-                                      .cameraController.value.aspectRatio,
-                              child: Stack(
-                                fit: StackFit.expand,
-                                children: <Widget>[
-                                  CameraPreview(
-                                      _cameraService.cameraController),
-                                  CustomPaint(
-                                    painter: FacePainter(
-                                        face: faceDetected,
-                                        imageSize: imageSize),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-                  }
-                } else {
-                  return Center(child: CircularProgressIndicator());
-                }
-              },
-            ),
+            body,
             CameraHeader(
               "SIGN UP",
               onBackPressed: _onBackPressed,
@@ -215,7 +202,6 @@ class SignUpState extends State<SignUp> {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: !_bottomSheetVisible
             ? AuthActionButton(
-                _initializeControllerFuture,
                 onPressed: onShot,
                 isLogin: false,
                 reload: _reload,

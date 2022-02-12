@@ -10,6 +10,10 @@ class FaceDetectorService {
   FaceDetector _faceDetector;
   FaceDetector get faceDetector => _faceDetector;
 
+  List<Face> _faces = [];
+  List<Face> get faces => _faces;
+  bool get faceDetected => _faces.isNotEmpty;
+
   void initialize() {
     _faceDetector = GoogleMlKit.vision.faceDetector(
       FaceDetectorOptions(
@@ -18,7 +22,7 @@ class FaceDetectorService {
     );
   }
 
-  Future<List<Face>> getFacesFromImage(CameraImage image) async {
+  Future<void> detectFacesFromImage(CameraImage image) async {
     InputImageData _firebaseImageMetadata = InputImageData(
       imageRotation: _cameraService.cameraRotation,
       inputImageFormat: InputImageFormatMethods.fromRawValue(image.format.raw),
@@ -39,8 +43,7 @@ class FaceDetectorService {
       inputImageData: _firebaseImageMetadata,
     );
 
-    List<Face> faces = await _faceDetector.processImage(_firebaseVisionImage);
-    return faces;
+    _faces = await _faceDetector.processImage(_firebaseVisionImage);
   }
 
   dispose() {
