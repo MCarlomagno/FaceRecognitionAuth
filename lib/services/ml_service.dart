@@ -17,7 +17,7 @@ class MLService {
   List _predictedData;
   List get predictedData => _predictedData;
 
-  Future loadModel() async {
+  Future initialize() async {
     Delegate delegate;
     try {
       if (Platform.isAndroid) {
@@ -38,14 +38,13 @@ class MLService {
 
       this._interpreter = await Interpreter.fromAsset('mobilefacenet.tflite',
           options: interpreterOptions);
-      print('model loaded successfully');
     } catch (e) {
       print('Failed to load model.');
       print(e);
     }
   }
 
-  setCurrentPrediction(CameraImage cameraImage, Face face) {
+  void setCurrentPrediction(CameraImage cameraImage, Face face) {
     List input = _preProcess(cameraImage, face);
 
     input = input.reshape([1, 112, 112, 3]);
@@ -110,7 +109,6 @@ class MLService {
     User predictedResult;
 
     for (User u in users) {
-      print(u.modelData);
       currDist = _euclideanDistance(u.modelData, predictedData);
       if (currDist <= threshold && currDist < minDist) {
         minDist = currDist;
