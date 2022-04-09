@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
 class SinglePicture extends StatelessWidget {
-  const SinglePicture({Key key, @required this.imagePath}) : super(key: key);
+  const SinglePicture({Key? key, required this.imagePath}) : super(key: key);
   final String imagePath;
 
   @override

@@ -7,7 +7,7 @@ import 'package:face_net_authentication/services/camera.service.dart';
 import 'package:flutter/material.dart';
 
 class SignInSheet extends StatelessWidget {
-  SignInSheet({Key key, @required this.user}) : super(key: key);
+  SignInSheet({Key? key, required this.user}) : super(key: key);
   final User user;
 
   final _passwordController = TextEditingController();
@@ -20,7 +20,7 @@ class SignInSheet extends StatelessWidget {
           MaterialPageRoute(
               builder: (BuildContext context) => Profile(
                     user.user,
-                    imagePath: _cameraService.imagePath,
+                    imagePath: _cameraService.imagePath!,
                   )));
     } else {
       showDialog(

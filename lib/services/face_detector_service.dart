@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 class FaceDetectorService {
   CameraService _cameraService = locator<CameraService>();
 
-  FaceDetector _faceDetector;
+  late FaceDetector _faceDetector;
   FaceDetector get faceDetector => _faceDetector;
 
   List<Face> _faces = [];
@@ -24,8 +24,11 @@ class FaceDetectorService {
 
   Future<void> detectFacesFromImage(CameraImage image) async {
     InputImageData _firebaseImageMetadata = InputImageData(
-      imageRotation: _cameraService.cameraRotation,
-      inputImageFormat: InputImageFormatMethods.fromRawValue(image.format.raw),
+      imageRotation:
+          _cameraService.cameraRotation ?? InputImageRotation.Rotation_0deg,
+      inputImageFormat:
+          InputImageFormatMethods.fromRawValue(image.format.raw) ??
+              InputImageFormat.NV21,
       size: Size(image.width.toDouble(), image.height.toDouble()),
       planeData: image.planes.map(
         (Plane plane) {

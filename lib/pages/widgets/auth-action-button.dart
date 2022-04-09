@@ -6,12 +6,16 @@ import 'package:face_net_authentication/pages/widgets/app_button.dart';
 import 'package:face_net_authentication/services/camera.service.dart';
 import 'package:face_net_authentication/services/ml_service.dart';
 import 'package:flutter/material.dart';
+import 'package:image/image.dart';
 import '../home.dart';
 import 'app_text_field.dart';
 
 class AuthActionButton extends StatefulWidget {
   AuthActionButton(
-      {Key key, @required this.onPressed, @required this.isLogin, this.reload});
+      {Key? key,
+      required this.onPressed,
+      required this.isLogin,
+      required this.reload});
   final Function onPressed;
   final bool isLogin;
   final Function reload;
@@ -28,7 +32,7 @@ class _AuthActionButtonState extends State<AuthActionButton> {
   final TextEditingController _passwordTextEditingController =
       TextEditingController(text: '');
 
-  User predictedUser;
+  User? predictedUser;
 
   Future _signUp(context) async {
     DatabaseHelper _databaseHelper = DatabaseHelper.instance;
@@ -48,13 +52,13 @@ class _AuthActionButtonState extends State<AuthActionButton> {
 
   Future _signIn(context) async {
     String password = _passwordTextEditingController.text;
-    if (this.predictedUser.password == password) {
+    if (this.predictedUser!.password == password) {
       Navigator.push(
           context,
           MaterialPageRoute(
               builder: (BuildContext context) => Profile(
-                    this.predictedUser.user,
-                    imagePath: _cameraService.imagePath,
+                    this.predictedUser!.user,
+                    imagePath: _cameraService.imagePath!,
                   )));
     } else {
       showDialog(
@@ -68,9 +72,9 @@ class _AuthActionButtonState extends State<AuthActionButton> {
     }
   }
 
-  Future<User> _predictUser() async {
-    User userAndPass = await _mlService.predict();
-    return userAndPass ?? null;
+  Future<User?> _predictUser() async {
+    User? userAndPass = await _mlService.predict();
+    return userAndPass;
   }
 
   Future onTap() async {
@@ -100,7 +104,7 @@ class _AuthActionButtonState extends State<AuthActionButton> {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: Color(0xFF0F0BDB),
+          color: Colors.blue[200],
           boxShadow: <BoxShadow>[
             BoxShadow(
               color: Colors.blue.withOpacity(0.1),
@@ -140,7 +144,7 @@ class _AuthActionButtonState extends State<AuthActionButton> {
           widget.isLogin && predictedUser != null
               ? Container(
                   child: Text(
-                    'Welcome back, ' + predictedUser.user + '.',
+                    'Welcome back, ' + predictedUser!.user + '.',
                     style: TextStyle(fontSize: 20),
                   ),
                 )
