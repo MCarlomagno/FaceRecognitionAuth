@@ -5,17 +5,17 @@ import 'package:flutter/foundation.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 
 class CameraService {
-  CameraController _cameraController;
-  CameraController get cameraController => this._cameraController;
+  CameraController? _cameraController;
+  CameraController? get cameraController => this._cameraController;
 
-  InputImageRotation _cameraRotation;
-  InputImageRotation get cameraRotation => this._cameraRotation;
+  InputImageRotation? _cameraRotation;
+  InputImageRotation? get cameraRotation => this._cameraRotation;
 
-  String _imagePath;
-  String get imagePath => this._imagePath;
+  String? _imagePath;
+  String? get imagePath => this._imagePath;
 
   Future<void> initialize() async {
-    if (this._cameraController != null) return;
+    if (_cameraController != null) return;
     CameraDescription description = await _getCameraDescription();
     await _setupCameraController(description: description);
     this._cameraRotation = rotationIntToImageRotation(
@@ -30,14 +30,14 @@ class CameraService {
   }
 
   Future _setupCameraController({
-    @required CameraDescription description,
+    required CameraDescription description,
   }) async {
     this._cameraController = CameraController(
       description,
       ResolutionPreset.high,
       enableAudio: false,
     );
-    await this._cameraController.initialize();
+    await _cameraController?.initialize();
   }
 
   InputImageRotation rotationIntToImageRotation(int rotation) {
@@ -53,23 +53,26 @@ class CameraService {
     }
   }
 
-  Future<XFile> takePicture() async {
-    await _cameraController.stopImageStream();
-    XFile file = await _cameraController.takePicture();
-    this._imagePath = file.path;
+  Future<XFile?> takePicture() async {
+    assert(_cameraController != null, 'Camera controller not initialized');
+    await _cameraController?.stopImageStream();
+    XFile? file = await _cameraController?.takePicture();
+    _imagePath = file?.path;
     return file;
   }
 
   Size getImageSize() {
     assert(_cameraController != null, 'Camera controller not initialized');
+    assert(
+        _cameraController!.value.previewSize != null, 'Preview size is null');
     return Size(
-      _cameraController.value.previewSize.height,
-      _cameraController.value.previewSize.width,
+      _cameraController!.value.previewSize!.height,
+      _cameraController!.value.previewSize!.width,
     );
   }
 
   dispose() async {
-    await this._cameraController.dispose();
+    await this._cameraController?.dispose();
     this._cameraController = null;
   }
 }

@@ -9,8 +9,8 @@ class AppButton extends StatelessWidget {
         Icons.add,
         color: Colors.white,
       )});
-  final Function onPressed;
-  final String text;
+  final void Function()? onPressed;
+  final String? text;
   final Icon icon;
   final Color color;
   @override
@@ -36,7 +36,7 @@ class AppButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              text,
+              text ?? '',
               style: TextStyle(color: Colors.white),
             ),
             SizedBox(

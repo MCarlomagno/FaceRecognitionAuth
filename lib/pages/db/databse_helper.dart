@@ -18,7 +18,7 @@ class DatabaseHelper {
   DatabaseHelper._privateConstructor();
   static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
 
-  static Database _database;
+  static late Database _database;
   Future<Database> get database async {
     if (_database != null) return _database;
     _database = await _initDatabase();
@@ -54,7 +54,7 @@ class DatabaseHelper {
     return users.map((u) => User.fromMap(u)).toList();
   }
 
-  Future<void> deleteAll() async {
+  Future<int> deleteAll() async {
     Database db = await instance.database;
     return await db.delete(table);
   }

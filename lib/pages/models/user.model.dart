@@ -6,9 +6,9 @@ class User {
   List modelData;
 
   User({
-    this.user,
-    this.password,
-    this.modelData,
+    required this.user,
+    required this.password,
+    required this.modelData,
   });
 
   static User fromMap(Map<String, dynamic> user) {

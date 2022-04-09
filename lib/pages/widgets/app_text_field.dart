@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class AppTextField extends StatelessWidget {
   AppTextField(
-      {Key key,
-      @required this.labelText,
-      @required this.controller,
+      {Key? key,
+      required this.labelText,
+      required this.controller,
       this.keyboardType = TextInputType.text,
       this.autofocus = false,
       this.isPassword = false})

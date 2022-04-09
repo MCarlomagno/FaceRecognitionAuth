@@ -1,4 +1,3 @@
-
 import 'package:camera/camera.dart';
 import 'package:face_net_authentication/locator.dart';
 import 'package:face_net_authentication/pages/widgets/FacePainter.dart';
@@ -7,10 +6,11 @@ import 'package:face_net_authentication/services/face_detector_service.dart';
 import 'package:flutter/material.dart';
 
 class CameraDetectionPreview extends StatelessWidget {
-  CameraDetectionPreview({Key key}) : super(key: key);
+  CameraDetectionPreview({Key? key}) : super(key: key);
 
   final CameraService _cameraService = locator<CameraService>();
-  final FaceDetectorService _faceDetectorService = locator<FaceDetectorService>();
+  final FaceDetectorService _faceDetectorService =
+      locator<FaceDetectorService>();
 
   @override
   Widget build(BuildContext context) {
@@ -25,11 +25,12 @@ class CameraDetectionPreview extends StatelessWidget {
             fit: BoxFit.fitHeight,
             child: Container(
               width: width,
-              height: width * _cameraService.cameraController.value.aspectRatio,
+              height:
+                  width * _cameraService.cameraController!.value.aspectRatio,
               child: Stack(
                 fit: StackFit.expand,
                 children: <Widget>[
-                  CameraPreview(_cameraService.cameraController),
+                  CameraPreview(_cameraService.cameraController!),
                   if (_faceDetectorService.faceDetected)
                     CustomPaint(
                       painter: FacePainter(

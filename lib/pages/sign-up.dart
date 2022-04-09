@@ -13,16 +13,16 @@ import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:flutter/material.dart';
 
 class SignUp extends StatefulWidget {
-  const SignUp({Key key}) : super(key: key);
+  const SignUp({Key? key}) : super(key: key);
 
   @override
   SignUpState createState() => SignUpState();
 }
 
 class SignUpState extends State<SignUp> {
-  String imagePath;
-  Face faceDetected;
-  Size imageSize;
+  String? imagePath;
+  Face? faceDetected;
+  Size? imageSize;
 
   bool _detectingFaces = false;
   bool pictureTaken = false;
@@ -57,7 +57,7 @@ class SignUpState extends State<SignUp> {
     _frameFaces();
   }
 
-  Future<void> onShot() async {
+  Future<bool> onShot() async {
     if (faceDetected == null) {
       showDialog(
         context: context,
@@ -72,10 +72,10 @@ class SignUpState extends State<SignUp> {
     } else {
       _saving = true;
       await Future.delayed(Duration(milliseconds: 500));
-      await _cameraService.cameraController.stopImageStream();
+      await _cameraService.cameraController?.stopImageStream();
       await Future.delayed(Duration(milliseconds: 200));
-      XFile file = await _cameraService.takePicture();
-      imagePath = file.path;
+      XFile? file = await _cameraService.takePicture();
+      imagePath = file?.path;
 
       setState(() {
         _bottomSheetVisible = true;
@@ -89,7 +89,7 @@ class SignUpState extends State<SignUp> {
   _frameFaces() {
     imageSize = _cameraService.getImageSize();
 
-    _cameraService.cameraController.startImageStream((image) async {
+    _cameraService.cameraController?.startImageStream((image) async {
       if (_cameraService.cameraController != null) {
         if (_detectingFaces) return;
 
@@ -138,7 +138,7 @@ class SignUpState extends State<SignUp> {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
-    Widget body;
+    late Widget body;
     if (_initializing) {
       body = Center(
         child: CircularProgressIndicator(),
@@ -153,7 +153,7 @@ class SignUpState extends State<SignUp> {
             alignment: Alignment.center,
             child: FittedBox(
               fit: BoxFit.cover,
-              child: Image.file(File(imagePath)),
+              child: Image.file(File(imagePath!)),
             ),
             transform: Matrix4.rotationY(mirror)),
       );
@@ -171,14 +171,14 @@ class SignUpState extends State<SignUp> {
               child: Container(
                 width: width,
                 height:
-                    width * _cameraService.cameraController.value.aspectRatio,
+                    width * _cameraService.cameraController!.value.aspectRatio,
                 child: Stack(
                   fit: StackFit.expand,
                   children: <Widget>[
-                    CameraPreview(_cameraService.cameraController),
+                    CameraPreview(_cameraService.cameraController!),
                     CustomPaint(
-                      painter:
-                          FacePainter(face: faceDetected, imageSize: imageSize),
+                      painter: FacePainter(
+                          face: faceDetected!, imageSize: imageSize!),
                     ),
                   ],
                 ),

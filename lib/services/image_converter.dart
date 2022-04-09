@@ -12,7 +12,7 @@ imglib.Image convertToImage(CameraImage image) {
   } catch (e) {
     print("ERROR:" + e.toString());
   }
-  return null;
+  throw Exception('Image format not supported');
 }
 
 imglib.Image _convertBGRA8888(CameraImage image) {
@@ -30,11 +30,11 @@ imglib.Image _convertYUV420(CameraImage image) {
   var img = imglib.Image(width, height);
   const int hexFF = 0xFF000000;
   final int uvyButtonStride = image.planes[1].bytesPerRow;
-  final int uvPixelStride = image.planes[1].bytesPerPixel;
+  final int? uvPixelStride = image.planes[1].bytesPerPixel;
   for (int x = 0; x < width; x++) {
     for (int y = 0; y < height; y++) {
       final int uvIndex =
-          uvPixelStride * (x / 2).floor() + uvyButtonStride * (y / 2).floor();
+          uvPixelStride! * (x / 2).floor() + uvyButtonStride * (y / 2).floor();
       final int index = y * width + x;
       final yp = image.planes[0].bytes[index];
       final up = image.planes[1].bytes[uvIndex];

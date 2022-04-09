@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AuthButton extends StatelessWidget {
-  const AuthButton({Key key, @required this.onTap}) : super(key: key);
-  final Function onTap;
+  const AuthButton({Key? key, required this.onTap}) : super(key: key);
+  final void Function() onTap;
 
   @override
   Widget build(BuildContext context) {
