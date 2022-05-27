@@ -45,7 +45,7 @@ class _AuthActionButtonState extends State<AuthActionButton> {
       modelData: predictedData,
     );
     await _databaseHelper.insert(userToSave);
-    this._mlService.setPredictedData(null);
+    this._mlService.setPredictedData([]);
     Navigator.push(context,
         MaterialPageRoute(builder: (BuildContext context) => MyHomePage()));
   }
