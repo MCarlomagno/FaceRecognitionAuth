@@ -20,6 +20,12 @@ class FaceDetectorService {
         mode: FaceDetectorMode.accurate,
       ),
     );
+
+    // _faceDetector = FaceDetector(
+    //     options: FaceDetectorOptions(
+    //         performanceMode: FaceDetectorMode.fast,
+    //         enableContours: true,
+    //         enableClassification: true));
   }
 
   Future<void> detectFacesFromImage(CameraImage image) async {
