@@ -72,7 +72,7 @@ class SignUpState extends State<SignUp> {
     } else {
       _saving = true;
       await Future.delayed(Duration(milliseconds: 500));
-      await _cameraService.cameraController?.stopImageStream();
+      // await _cameraService.cameraController?.stopImageStream();
       await Future.delayed(Duration(milliseconds: 200));
       XFile? file = await _cameraService.takePicture();
       imagePath = file?.path;
@@ -99,6 +99,9 @@ class SignUpState extends State<SignUp> {
           await _faceDetectorService.detectFacesFromImage(image);
 
           if (_faceDetectorService.faces.isNotEmpty) {
+            setState(() {
+              faceDetected = _faceDetectorService.faces[0];
+            });
             if (_saving) {
               _mlService.setCurrentPrediction(image, faceDetected);
               setState(() {
@@ -178,7 +181,7 @@ class SignUpState extends State<SignUp> {
                     CameraPreview(_cameraService.cameraController!),
                     CustomPaint(
                       painter: FacePainter(
-                          face: faceDetected!, imageSize: imageSize!),
+                          face: faceDetected, imageSize: imageSize!),
                     ),
                   ],
                 ),
