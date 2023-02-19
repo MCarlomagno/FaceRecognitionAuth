@@ -96,7 +96,7 @@ class SignInState extends State<SignIn> {
     if (_faceDetectorService.faceDetected) {
       User? user = await _mlService.predict();
       var bottomSheetController = scaffoldKey.currentState!
-          .showBottomSheet((context) => signInSheet(user: user!));
+          .showBottomSheet((context) => signInSheet(user: user));
       bottomSheetController.closed.whenComplete(_reload);
     }
   }
