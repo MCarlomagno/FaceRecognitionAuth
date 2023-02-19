@@ -7,19 +7,24 @@
         {
             "name": "FaceRecognitionAuth",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "flutterMode": "debug"
+
         },
         {
             "name": "moto one",
             "deviceId": "ZE222GZGD7",
             "request": "launch",
             "type": "dart",
+            "flutterMode": "debug"
+
         },
         {
             "name": "emulator",
             "deviceId": "emulator-5554",
             "request": "launch",
             "type": "dart",
+            "flutterMode": "debug"
         }
     ]
 }

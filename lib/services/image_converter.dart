@@ -3,6 +3,7 @@ import 'package:camera/camera.dart';
 
 imglib.Image convertToImage(CameraImage image) {
   try {
+    print('image.format.group=>${image.format.group}');
     if (image.format.group == ImageFormatGroup.yuv420) {
       return _convertYUV420(image);
     } else if (image.format.group == ImageFormatGroup.bgra8888) {
