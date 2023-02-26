@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:camera/camera.dart';
-import 'package:flutter/foundation.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 
 class CameraService {
@@ -43,13 +42,13 @@ class CameraService {
   InputImageRotation rotationIntToImageRotation(int rotation) {
     switch (rotation) {
       case 90:
-        return InputImageRotation.Rotation_90deg;
+        return InputImageRotation.rotation90deg;
       case 180:
-        return InputImageRotation.Rotation_180deg;
+        return InputImageRotation.rotation180deg;
       case 270:
-        return InputImageRotation.Rotation_270deg;
+        return InputImageRotation.rotation270deg;
       default:
-        return InputImageRotation.Rotation_0deg;
+        return InputImageRotation.rotation0deg;
     }
   }
 
