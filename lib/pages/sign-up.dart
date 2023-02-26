@@ -109,6 +109,7 @@ class SignUpState extends State<SignUp> {
               });
             }
           } else {
+            print('face is null');
             setState(() {
               faceDetected = null;
             });
@@ -116,7 +117,7 @@ class SignUpState extends State<SignUp> {
 
           _detectingFaces = false;
         } catch (e) {
-          print(e);
+          print('Error _faceDetectorService face => $e');
           _detectingFaces = false;
         }
       }

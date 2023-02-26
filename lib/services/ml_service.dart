@@ -112,6 +112,8 @@ class MLService {
     double currDist = 0.0;
     User? predictedResult;
 
+    print('users.length=> ${users.length}');
+
     for (User u in users) {
       currDist = _euclideanDistance(u.modelData, predictedData);
       if (currDist <= threshold && currDist < minDist) {
